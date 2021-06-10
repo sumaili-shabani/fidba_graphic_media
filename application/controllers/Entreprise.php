@@ -66,6 +66,16 @@ class entreprise extends CI_Controller
 	      $this->load->view('backend/entreprise/dashbord', $data);
 	}
 
+  function article(){
+    $data['title']="Paramétrage  des articles et publication";
+      $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+
+    $data['articles']     = $this->crud_model->Select_articles();
+    $data['categories']   = $this->crud_model->Select_category();
+
+    $this->load->view('backend/entreprise/article', $data);  
+  }
+
 
 
 	function profile(){
@@ -586,6 +596,361 @@ class entreprise extends CI_Controller
         $this->zip->download(''.time().'.zip');
       }
    }
+
+
+      // script de article
+   function fetch_article(){  
+
+         $fetch_data = $this->crud_model->make_datatables_article();  
+         $data = array();  
+         $etat = '';
+         foreach($fetch_data as $row)  
+         {  
+              $sub_array = array(); 
+
+              if ($row->type=='texte') {
+                $etat = '
+              <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                  <span><i class="fa fa-file text-primary" ></i></span>
+              </div>
+               ';
+              }
+              elseif ($row->type=='video'){
+                $etat = '
+                    <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                        <span><i class="fa fa-video-camera text-primary"></i></span>
+                    </div>
+                ';
+              }
+              else{
+
+                $etat = '';
+              }
+
+
+              $sub_array[] = $etat;
+             
+              // $sub_array[] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail user-avatar bg-success  d-sm-flex" width="50" height="35" />';  
+              $sub_array[] = nl2br(substr($row->nom, 0,20)).'...';  
+              $sub_array[] = nl2br(substr($row->description, 0,10)).'...'; 
+
+              $sub_array[] = nl2br(substr($row->nom_cat, 0,15)).' ...';
+
+              $sub_array[] = nl2br(substr($row->type, 0,15)).'';
+
+              $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
+
+             
+              $sub_array[] = '<button type="button" name="update" idart="'.$row->idart.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>'; 
+
+              $sub_array[] = '<button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';
+              
+              $data[] = $sub_array;  
+         }  
+         $output = array(  
+              "draw"                =>     intval($_POST["draw"]),  
+              "recordsTotal"        =>     $this->crud_model->get_all_data_article(),  
+              "recordsFiltered"     =>     $this->crud_model->get_filtered_data_article(),  
+              "data"                =>     $data  
+         );  
+         echo json_encode($output);  
+    }
+
+
+    function fetch_article_pub(){  
+
+         $fetch_data = $this->crud_model->make_datatables_article();  
+         $data = array();  
+         $etat = '';
+         foreach($fetch_data as $row)  
+         {  
+              $sub_array = array(); 
+
+              if ($row->type=='texte') {
+                $etat = '
+              <div class="user-avatar bg-dim-primary d-none d-sm-flex">
+                  <span><i class="fa fa-file text-primary" ></i></span>
+              </div>
+               ';
+              }
+              elseif ($row->type=='video'){
+                $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+              }
+              else{
+
+                $etat = '';
+              }
+
+
+              $sub_array[] = '<input type="checkbox" class="delete_checkbox" value="'.$row->idart.'" id="delete_checkbox" />'; 
+
+              // $sub_array[] = $etat;
+             
+              $sub_array[] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail user-avatar bg-primary  d-sm-flex" width="50" height="35" />';  
+              $sub_array[] = nl2br(substr($row->nom, 0,20)).'...';  
+              $sub_array[] = nl2br(substr($row->description, 0,10)).'...'; 
+
+              $sub_array[] = nl2br(substr($row->nom_cat, 0,15)).' ...';
+
+              $sub_array[] = nl2br(substr($row->type, 0,15)).'';
+
+              // $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
+
+             
+              $sub_array[] = '<button type="button" name="update" idart="'.$row->idart.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>'; 
+
+              $sub_array[] = '<button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';
+              
+              $data[] = $sub_array;  
+         }  
+         $output = array(  
+              "draw"                =>     intval($_POST["draw"]),  
+              "recordsTotal"        =>     $this->crud_model->get_all_data_article(),  
+              "recordsFiltered"     =>     $this->crud_model->get_filtered_data_article(),  
+              "data"                =>     $data  
+         );  
+         echo json_encode($output);  
+    }
+
+
+
+    function operation_article(){
+
+        if($_FILES["user_image"]["size"] > 0)  
+        {  
+             $insert_data = array(  
+                 'nom'            =>     $this->input->post('nom'),  
+                 'description'    =>     htmlspecialchars($this->input->post("description")),
+                 'lien'           =>     $this->input->post("lien"),
+                 'idcat'          =>     $this->input->post('idcat'), 
+                 'type'           =>     $this->input->post('type'), 
+                 'image'          =>     $this->upload_image_article()
+              );    
+        }  
+        else  
+        {  
+               $user_image = "icone-user.png";  
+               $insert_data = array(  
+                 'nom'            =>     $this->input->post('nom'),  
+                 'description'    =>     htmlspecialchars($this->input->post("description")),
+                 'lien'           =>     $this->input->post("lien"),
+                 'idcat'          =>     $this->input->post('idcat'), 
+                 'type'           =>     $this->input->post('type'),
+                 'image'          =>     $user_image
+              );   
+        }
+
+      $requete=$this->crud_model->insert_article($insert_data);
+      echo("Ajout information avec succès");
+      
+    }
+
+    function modification_article(){
+
+        if($_FILES["user_image"]["size"] > 0)  
+        {  
+             $updated_data = array(  
+                 'nom'            =>     $this->input->post('nom'),  
+                 'description'    =>     htmlspecialchars($this->input->post("description")),
+                 'lien'           =>     $this->input->post("lien"),
+                 'idcat'          =>     $this->input->post('idcat'), 
+                 'type'           =>     $this->input->post('type'), 
+                 'image'          =>     $this->upload_image_article()
+              );    
+        }  
+        
+        else  
+        {   
+             $updated_data = array(  
+                 'nom'          =>     $this->input->post('nom'),  
+                 'description'    =>     htmlspecialchars($this->input->post("description")),
+                 'lien'           =>     $this->input->post("lien"),
+                 'idcat'          =>     $this->input->post('idcat'), 
+                 'type'           =>     $this->input->post('type')
+              );   
+        }
+
+        
+        $this->crud_model->update_article($this->input->post("idart"), $updated_data);
+
+        echo("modification avec succès");
+    }
+
+    function supression_article(){
+
+        $this->crud_model->delete_article($this->input->post("idart"));
+        echo("suppression avec succès");
+      
+    }
+
+    function fetch_single_article()  
+    {  
+         $output = array();  
+         $data = $this->crud_model->fetch_single_article($this->input->post('idart'));  
+         foreach($data as $row)  
+         {  
+              $output['nom'] = $row->nom;  
+              $output['description'] = $row->description; 
+
+              $output['lien']   = $row->lien;
+              $output['type']   = $row->type;
+              $output['idcat']  = $row->idcat;
+              
+              $output['image']  = $row->image;
+              $output['text_description']   ='
+                <textarea class="form-control textarea" name="description" id="description" placeholder="Parler un peu sur la description de l\'article">
+                    '.$row->description.'
+                </textarea>
+              ';
+
+
+              if($row->image != '')  
+              {  
+                   $output['user_image'] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail" width="300" height="250" /><input type="hidden" name="hidden_user_image" value="'.$row->image.'" />';  
+              }  
+              else  
+              {  
+                   $output['user_image'] = '<input type="hidden" name="hidden_user_image" value="" />';  
+              }  
+
+              
+         }  
+         echo json_encode($output);  
+    }
+
+    function upload_image_article()  
+      {  
+           if(isset($_FILES["user_image"]))  
+           {  
+                $extension = explode('.', $_FILES['user_image']['name']);  
+                $new_name = rand() . '.' . $extension[1];  
+                $destination = './upload/article/' . $new_name;  
+                move_uploaded_file($_FILES['user_image']['tmp_name'], $destination);  
+                return $new_name;  
+           }  
+      }
+
+  // fin de sript article 
+
+      // fin de sript article 
+
+  function pagination_view_article($param1='')
+  {
+    $limit = $param1;
+    if ($limit !='') {
+      $output = $this->crud_model->fetch_details_view_articles_limit($limit);
+    }
+    else{
+      $output = $this->crud_model->fetch_details_view_articles();
+    }
+    
+    echo($output);
+  }
+
+  function fetch_search_view_article()
+  {
+    $output = '';
+    $query = '';
+    $etat = '';
+    if($this->input->post('query'))
+    {
+     $query = $this->input->post('query');
+    }
+    $data = $this->crud_model->fetch_data_search_view_article($query);
+   $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($data->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($data->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nom_cat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idart="'.$row->idart.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+
+      echo($output);
+    
+  }
+
 
 
 

@@ -35,43 +35,16 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Applications:</h6>
-                <a class="collapse-item" href="<?php echo(base_url()) ?>entreprise/category">Catégorie</a>
                 <a class="collapse-item" href="<?php echo(base_url()) ?>entreprise/article">Média Article</a>
 
-                <a class="collapse-item" href="<?php echo(base_url()) ?>entreprise/publicite">Publicité</a>
-                
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Opérations</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Nos opérations:</h6>
-
                 <a class="collapse-item" href="<?php echo(base_url()) ?>entreprise/publicity_personnele">Publicité entreprise</a>
-
-               
                 
-
             </div>
         </div>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Les statistiques
-    </div>
+   
 
    
     <!-- Nav Item - Tables -->

@@ -318,7 +318,7 @@
                   if (action =="Add") {
                        
                       $.ajax({  
-                           url:"<?php echo base_url() . 'admin/operation_article'?>",  
+                           url:"<?php echo base_url() . 'entreprise/operation_article'?>",  
                            method:'POST',  
                            data:new FormData(this),  
                            contentType:false,  
@@ -339,7 +339,7 @@
                   if (action == 'Edit') {
 
                         $.ajax({  
-                             url:"<?php echo base_url() . 'admin/modification_article'?>",  
+                             url:"<?php echo base_url() . 'entreprise/modification_article'?>",  
                              method:'POST',  
                              data:new FormData(this),  
                              contentType:false,  
@@ -371,7 +371,7 @@
           $(document).on('click', '.update', function(){  
                var idart = $(this).attr("idart");  
                $.ajax({  
-                    url:"<?php echo base_url(); ?>admin/fetch_single_article",  
+                    url:"<?php echo base_url(); ?>entreprise/fetch_single_article",  
                     method:"POST",  
                     data:{idart:idart},  
                     dataType:"json",  
@@ -408,7 +408,7 @@
               {
                 
                   $.ajax({
-                        url:"<?php echo base_url(); ?>admin/supression_article",
+                        url:"<?php echo base_url(); ?>entreprise/supression_article",
                         method:"POST",
                         data:{idart:idart},
                         success:function(data)
@@ -493,7 +493,7 @@
 
           function filtrage(nombre){
             $.ajax({
-             url:"<?php echo base_url(); ?>admin/pagination_view_article/"+nombre,
+             url:"<?php echo base_url(); ?>entreprise/pagination_view_article/"+nombre,
              method:"GET",
 
               beforeSend:function()
@@ -509,7 +509,7 @@
           function load_country_data(page)
           {
             $.ajax({
-             url:"<?php echo base_url(); ?>admin/pagination_view_article",
+             url:"<?php echo base_url(); ?>entreprise/pagination_view_article",
              method:"GET",
 
               beforeSend:function()
@@ -532,7 +532,7 @@
          function load_data(query)
          {
             $.ajax({
-             url:"<?php echo base_url(); ?>admin/fetch_search_view_article",
+             url:"<?php echo base_url(); ?>entreprise/fetch_search_view_article",
              method:"POST",
              data:{query:query},
               beforeSend:function()
