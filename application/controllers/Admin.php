@@ -14,8 +14,8 @@ class admin extends CI_Controller
 		      	redirect(base_url().'login');
 		  }
 		  $this->load->library('form_validation');
-		  $this->load->library('encrypt');
-	      $this->load->library('pdf');
+		  $this->load->library('encryption');
+	      // $this->load->library('pdf');
 		  $this->load->model('crud_model'); 
 
 		  $this->load->helper('url');
@@ -45,6 +45,13 @@ class admin extends CI_Controller
 		      $data['nombre_paiement'] = $this->crud_model->statistiques_nombre("paiement");
 
 		      $data['nombre_users'] = $this->crud_model->statistiques_nombre("users");
+
+		      $data['nombre_publicite']   = $this->crud_model->statistiques_nombre("publicite");
+			  $data['nombre_category']   = $this->crud_model->statistiques_nombre("category");
+
+			  $data['nombre_pub']   = $this->crud_model->statistiques_nombre("galery2");
+			  $data['nombre_role']   = $this->crud_model->statistiques_nombre("role");
+
 		      $this->load->view('backend/admin/dashbord', $data);
 		}
 
@@ -319,6 +326,48 @@ class admin extends CI_Controller
 		    $this->load->view('backend/admin/contact_info', $data);
 		}
 
+
+		function article(){
+			$data['title']="Paramétrage  des articles et publication";
+		    $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+ 
+			$data['articles']  		= $this->crud_model->Select_articles();
+			$data['categories']  	= $this->crud_model->Select_category();
+
+			$this->load->view('backend/admin/article', $data);	
+		}
+
+		function publicite(){
+		    $data['title']        ="Paramétrage  des publicités pour les publications";
+		    $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+
+		    $data['articles']     = $this->crud_model->Select_articles();
+		    $data['categories']   = $this->crud_model->Select_category();
+
+		    $this->load->view('backend/admin/publicite', $data);  
+		}
+
+		function publicity_personnele(){
+		    $data['title']="Paramétrage  des publicités";
+		    $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+		    $this->load->view('backend/admin/publicity_personnele', $data);  
+		}
+
+		function stat_pub(){
+		    $data['title']="Statistique sur publication";
+		    $data['contact_info_site']  = $this->crud_model->Select_contact_info_site();
+
+		    $data['nombre_publicite']   = $this->crud_model->statistiques_nombre("publicite");
+		    $data['nombre_category']   = $this->crud_model->statistiques_nombre("category");
+
+		    $data['nombre_pub']   = $this->crud_model->statistiques_nombre("galery2");
+		    $data['nombre_role']   = $this->crud_model->statistiques_nombre("role");
+
+		    $this->load->view('backend/admin/stat_pub', $data);
+		}
+
+		
+
 		/*
 
 	    DEBIT FONCTION APPEL DES VIEWS UTILISATION DE PORTALI Ecommerce
@@ -451,48 +500,88 @@ class admin extends CI_Controller
 		  }
 
 
-		// script de produit en stock
+		// script de site en stock
 
-		function pagination_view_product()
+		function pagination_view_site()
 		{
+			  $output = '';
+		      $this->db->select("*");
+		      $this->db->from("tbl_info");
+		      $this->db->order_by("idinfo", "DESC");
+		      $this->db->limit(10);
+		      $query = $this->db->get();
+		      $output .= '
+		      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+		        <thead>  
+		              <tr>  
+		                   <th width="10%">Icone</th>  
+		                   <th width="10%">Nom du site</th>  
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Téléphone principal</th>
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Facebook</th>
+		                   <th width="5%">Twitter</th>  
+		                   <th width="5%">Linkedin</th> 
+		                  
+		                   <th width="5%">Modifier</th> 
+		                   <th width="5%">Supprimer</th>  
+		              </tr>  
+		         </thead>
 
-		  $this->load->library("pagination");
-		  $config = array();
-		  $config["base_url"] = "#";
-		  $config["total_rows"] = $this->crud_model->count_all_view_product();
-		  $config["per_page"] = 10;
-		  $config["uri_segment"] = 3;
-		  $config["use_page_numbers"] = TRUE;
-		  $config["full_tag_open"] = '<ul class="nav pagination">';
-		  $config["full_tag_close"] = '</ul>';
-		  $config["first_tag_open"] = '<li class="page-item">';
-		  $config["first_tag_close"] = '</li>';
-		  $config["last_tag_open"] = '<li class="page-item">';
-		  $config["last_tag_close"] = '</li>';
-		  $config['next_link'] = '<li class="page-item active"><i class="btn btn-info">&gt;&gt;</i>';
-		  $config["next_tag_open"] = '<li class="page-item">';
-		  $config["next_tag_close"] = '</li>';
-		  $config["prev_link"] = '<li class="page-item active"><i class="btn btn-info">&lt;&lt;</i>';
-		  $config["prev_tag_open"] = "<li class='page-item'>";
-		  $config["prev_tag_close"] = "</li>";
-		  $config["cur_tag_open"] = "<li class='page-item active'><a href='#' class='page-link'>";
-		  $config["cur_tag_close"] = "</a></li>";
-		  $config["num_tag_open"] = "<li class='page-item'>";
-		  $config["num_tag_close"] = "</li>";
-		  $config["num_links"] = 1;
-		  $this->pagination->initialize($config);
-		  $page = $this->uri->segment(3);
-		  $start = ($page - 1) * $config["per_page"];
+		      ';
+		      if ($query->num_rows() < 0) {
+		        
+		      }
+		      else{
 
-		  $output = array(
-		   'pagination_link'  => $this->pagination->create_links(),
-		   'country_table'   => $this->crud_model->fetch_details_view_product($config["per_page"], $start)
-		  );
-		  echo json_encode($output);
+		        foreach($query->result() as $row)
+		        {
+		         $output .= '
+		         <tr>
+		          <td><img src="'.base_url().'upload/tbl_info/'.$row->icone.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+		          <td>'.nl2br(substr($row->nom_site, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->email, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->tel1, 0,10)).' ...</td>
+		          <td>'.nl2br(substr($row->adresse, 0,10)).'...</td>
+
+		          <td>'.nl2br(substr($row->facebook, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->twitter, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->linkedin, 0,10)).'...</td>
+		          
+		          
+		          <td><button type="button" name="update" idinfo="'.$row->idinfo.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+		          <td><button type="button" name="delete" idinfo="'.$row->idinfo.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+		          
+
+		         </tr>
+		         ';
+		        }
+		      }
+		      $output .= '
+		          <tfoot>  
+		              <tr>  
+		                   <th width="10%">Icone</th>  
+		                   <th width="10%">Nom du site</th>  
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Téléphone principal</th>
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Facebook</th>
+		                   <th width="5%">Twitter</th>  
+		                   <th width="5%">Linkedin</th> 
+		                  
+		                   <th width="5%">Modifier</th> 
+		                   <th width="5%">Supprimer</th>  
+		              </tr>  
+		         </tfoot>    
+		        
+		    </table>';
+
+		    echo($output);
 		}
 
 
-		function fetch_search_view_product()
+		function fetch_search_view_site()
 		{
 		  $output = '';
 		  $query = '';
@@ -500,63 +589,76 @@ class admin extends CI_Controller
 		  {
 		   $query = $this->input->post('query');
 		  }
-		  $data = $this->crud_model->fetch_data_search_view_product($query);
+		  $data = $this->crud_model->fetch_data_search_view_site($query);
 		  $output .= '
-	      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
-	          <thead>  
-	            <tr>         
-	               <th width="10%">Image</th>
-	               <th width="15%">Nom du produit</th>  
-	               <th width="10%">Prix</th>
-	               <th width="10%">Catégorie produit</th>
-	               <th width="15%">Qte en stock</th>
-	               <th width="10%">Utilisateur action</th>
-	               <th width="5%">Modifier</th> 
-	               <th width="5%">Supprimer</th>  
-	            </tr> 
-	         </thead> 
-	      ';
-	      if ($data->num_rows() < 0) {
-	        
-	      }
-	      else{
+		      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+		        <thead>  
+		              <tr>  
+		                   <th width="10%">Icone</th>  
+		                   <th width="10%">Nom du site</th>  
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Téléphone principal</th>
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Facebook</th>
+		                   <th width="5%">Twitter</th>  
+		                   <th width="5%">Linkedin</th> 
+		                  
+		                   <th width="5%">Modifier</th> 
+		                   <th width="5%">Supprimer</th>  
+		              </tr>  
+		         </thead>
 
-	        foreach($data->result() as $row)
-	        {
-	         $output .= '
-	         <tr>
-	          <td><img src="'.base_url().'upload/product/'.$row->product_image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+		      ';
+		      if ($data->num_rows() < 0) {
+		        
+		      }
+		      else{
 
-	          <td>'.nl2br(substr($row->product_name, 0,10)).'...'.'</td>
-	          <td>'.nl2br(substr($row->product_price, 0,10)).' $'.'</td>
-	          <td>'.nl2br(substr($row->nom, 0,20)).' ...'.'</td>
-	          <td>'.nl2br(substr($row->Qte, 0,10)).' '.'</td>
-	          <td>'.nl2br(substr($row->first_name, 0,10)).'...'.'</td>
-	          
-	          <td><button type="button" name="update" product_id="'.$row->product_id.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
-	          <td><button type="button" name="delete" product_id="'.$row->product_id.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
-	          
+		        foreach($data->result() as $row)
+		        {
+		         $output .= '
+		         <tr>
+		          <td><img src="'.base_url().'upload/tbl_info/'.$row->icone.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
 
-	         </tr>
-	         ';
-	        }
-	      }
-	      $output .= '
-	          <tfoot>  
-	            <tr>         
-	               <th width="10%">Image</th>
-	               <th width="15%">Nom du produit</th>  
-	               <th width="10%">Prix</th>
-	               <th width="10%">Catégorie produit</th>
-	               <th width="15%">Qte en stock</th>
-	               <th width="10%">Utilisateur action</th>
-	               <th width="5%">Modifier</th> 
-	               <th width="5%">Supprimer</th>  
-	            </tr> 
-	         </tfoot>   
-	            
-	        </table>';
-		  echo $output;
+		          <td>'.nl2br(substr($row->nom_site, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->email, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->tel1, 0,10)).' ...</td>
+		          <td>'.nl2br(substr($row->adresse, 0,10)).'...</td>
+
+		          <td>'.nl2br(substr($row->facebook, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->twitter, 0,10)).'...</td>
+		          <td>'.nl2br(substr($row->linkedin, 0,10)).'...</td>
+		          
+		          
+		          <td><button type="button" name="update" idinfo="'.$row->idinfo.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+		          <td><button type="button" name="delete" idinfo="'.$row->idinfo.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+		          
+
+		         </tr>
+		         ';
+		        }
+		      }
+		      $output .= '
+		          <tfoot>  
+		              <tr>  
+		                   <th width="10%">Icone</th>  
+		                   <th width="10%">Nom du site</th>  
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Téléphone principal</th>
+		                   <th width="15%">Adresse</th>
+		                   <th width="5%">Facebook</th>
+		                   <th width="5%">Twitter</th>  
+		                   <th width="5%">Linkedin</th> 
+		                  
+		                   <th width="5%">Modifier</th> 
+		                   <th width="5%">Supprimer</th>  
+		              </tr>  
+		         </tfoot>    
+		        
+		    </table>';
+
+		    echo($output);
+		  
 		}
 
 
@@ -576,7 +678,7 @@ class admin extends CI_Controller
                 $sub_array[] = nl2br(substr($row->first_name, 0,10)).'...'; 
                 
  
-                $sub_array[] = '<button type="button" name="update" product_id="'.$row->product_id.'" class="btn btn-warning btn-xs update"><i class="fa fa-edit"></i></button>';  
+                $sub_array[] = '<button type="button" name="update" product_id="'.$row->product_id.'" class="btn btn-primary btn-xs update"><i class="fa fa-edit"></i></button>';  
                 $sub_array[] = '<button type="button" name="delete" product_id="'.$row->product_id.'" class="btn btn-danger btn-xs delete"><i class="fa fa-trash"></i></button>';  
                 $data[] = $sub_array;  
            }  
@@ -719,7 +821,7 @@ class admin extends CI_Controller
 
                 
  
-                $sub_array[] = '<button type="button" name="update" idgalery="'.$row->idgalery.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
+                $sub_array[] = '<button type="button" name="update" idgalery="'.$row->idgalery.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
                 $sub_array[] = '<button type="button" name="delete" idgalery="'.$row->idgalery.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';  
                 $data[] = $sub_array;  
            }  
@@ -844,7 +946,7 @@ class admin extends CI_Controller
 	                $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
 	               
 	 
-	                $sub_array[] = '<button type="button" name="update" idcat="'.$row->idcat.'" class="btn btn-warning btn-sm btn-circle update"><i class="fa fa-edit"></i></button>';  
+	                $sub_array[] = '<button type="button" name="update" idcat="'.$row->idcat.'" class="btn btn-primary btn-sm btn-circle update"><i class="fa fa-edit"></i></button>';  
 	                $sub_array[] = '<button type="button" name="delete" idcat="'.$row->idcat.'" class="btn btn-danger btn-sm btn-circle delete"><i class="fa fa-trash"></i></button>';  
 	                $data[] = $sub_array;  
 	           }  
@@ -916,10 +1018,10 @@ class admin extends CI_Controller
 	           			$etat ='<span class="badge badge-success">Admin</span>';
 	           		}
 	           		else if ($row->idrole == 2) {
-	           			$etat ='<span class="badge badge-danger">Client</span>';
+	           			$etat ='<span class="badge badge-danger">Visiteur</span>';
 	           		}
 	           		else if ($row->idrole == 3) {
-	           			$etat ='<span class="badge badge-info">Boutiquier</span>';
+	           			$etat ='<span class="badge badge-info">Membre</span>';
 	           		}
 	           		else{
 	           			$etat ='<span class="badge badge-danger">User</span>';
@@ -939,7 +1041,7 @@ class admin extends CI_Controller
 
 	                
 	 
-	                $sub_array[] = '<button type="button" name="update" id="'.$row->id.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>'; 
+	                $sub_array[] = '<button type="button" name="update" id="'.$row->id.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>'; 
 
 	                $sub_array[] = '<button type="button" name="delete" id="'.$row->id.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';
 	                
@@ -1103,7 +1205,7 @@ class admin extends CI_Controller
 		            $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
 		           
 
-		            $sub_array[] = '<button type="button" name="update" idrole="'.$row->idrole.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
+		            $sub_array[] = '<button type="button" name="update" idrole="'.$row->idrole.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
 		            $sub_array[] = '<button type="button" name="delete" idrole="'.$row->idrole.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';  
 		            $data[] = $sub_array;  
 		       }  
@@ -1182,7 +1284,7 @@ class admin extends CI_Controller
 	                // $sub_array[] = nl2br(substr($row->confidentialite, 0,10)).'...'; 
 	                
 	 
-	                $sub_array[] = '<button type="button" name="update" idinfo="'.$row->idinfo.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
+	                $sub_array[] = '<button type="button" name="update" idinfo="'.$row->idinfo.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
 	                $sub_array[] = '<button type="button" name="delete" idinfo="'.$row->idinfo.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';  
 	                $data[] = $sub_array;  
 	           }  
@@ -1436,7 +1538,7 @@ class admin extends CI_Controller
 	          <td>'.nl2br(substr($row->QteEntree, 0,10)).'...'.'</td>
 	          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
 
-	          <td><button type="button" name="update" ids="'.$row->ids.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+	          <td><button type="button" name="update" ids="'.$row->ids.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
 	          <td><button type="button" name="delete" ids="'.$row->ids.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
 	          
 
@@ -1484,7 +1586,7 @@ class admin extends CI_Controller
 
                 $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
                 
-                $sub_array[] = '<button type="button" name="update" ide="'.$row->ide.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
+                $sub_array[] = '<button type="button" name="update" ide="'.$row->ide.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
                 $sub_array[] = '<button type="button" name="delete" ide="'.$row->ide.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';  
                 $data[] = $sub_array;  
            }  
@@ -1574,7 +1676,7 @@ class admin extends CI_Controller
 
                 $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
                 
-                $sub_array[] = '<button type="button" name="update" ids="'.$row->ids.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
+                $sub_array[] = '<button type="button" name="update" ids="'.$row->ids.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>';  
                 $sub_array[] = '<button type="button" name="delete" ids="'.$row->ids.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';  
                 $data[] = $sub_array;  
            }  
@@ -1797,6 +1899,616 @@ class admin extends CI_Controller
         }
     }
      // fin contact
+
+
+      // script de article
+	 function fetch_article(){  
+
+	       $fetch_data = $this->crud_model->make_datatables_article();  
+	       $data = array();  
+	       $etat = '';
+	       foreach($fetch_data as $row)  
+	       {  
+	            $sub_array = array(); 
+
+	            if ($row->type=='texte') {
+	            	$etat = '
+	            <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+	                <span><i class="fa fa-file text-primary" ></i></span>
+	            </div>
+	             ';
+	            }
+	            elseif ($row->type=='video'){
+	            	$etat = '
+		                <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+		                    <span><i class="fa fa-video-camera text-primary"></i></span>
+		                </div>
+		            ';
+	            }
+	            else{
+
+	            	$etat = '';
+	            }
+
+
+	            $sub_array[] = $etat;
+	           
+	            // $sub_array[] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail user-avatar bg-success  d-sm-flex" width="50" height="35" />';  
+	            $sub_array[] = nl2br(substr($row->nom, 0,20)).'...';  
+	            $sub_array[] = nl2br(substr($row->description, 0,10)).'...'; 
+
+	            $sub_array[] = nl2br(substr($row->nom_cat, 0,15)).' ...';
+
+	            $sub_array[] = nl2br(substr($row->type, 0,15)).'';
+
+	            $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
+
+	           
+	            $sub_array[] = '<button type="button" name="update" idart="'.$row->idart.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button>'; 
+
+	            $sub_array[] = '<button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';
+	            
+	            $data[] = $sub_array;  
+	       }  
+	       $output = array(  
+	            "draw"                =>     intval($_POST["draw"]),  
+	            "recordsTotal"        =>     $this->crud_model->get_all_data_article(),  
+	            "recordsFiltered"     =>     $this->crud_model->get_filtered_data_article(),  
+	            "data"                =>     $data  
+	       );  
+	       echo json_encode($output);  
+	  }
+
+
+	  function fetch_article_pub(){  
+
+	       $fetch_data = $this->crud_model->make_datatables_article();  
+	       $data = array();  
+	       $etat = '';
+	       foreach($fetch_data as $row)  
+	       {  
+	            $sub_array = array(); 
+
+	            if ($row->type=='texte') {
+	              $etat = '
+	            <div class="user-avatar bg-dim-primary d-none d-sm-flex">
+	                <span><i class="fa fa-file text-primary" ></i></span>
+	            </div>
+	             ';
+	            }
+	            elseif ($row->type=='video'){
+	              $etat = '
+	                <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+	                    <span><i class="fa fa-video-camera text-primary"></i></span>
+	                </div>
+	            ';
+	            }
+	            else{
+
+	              $etat = '';
+	            }
+
+
+	            $sub_array[] = '<input type="checkbox" class="delete_checkbox" value="'.$row->idart.'" id="delete_checkbox" />'; 
+
+	            // $sub_array[] = $etat;
+	           
+	            $sub_array[] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail user-avatar bg-primary  d-sm-flex" width="50" height="35" />';  
+	            $sub_array[] = nl2br(substr($row->nom, 0,20)).'...';  
+	            $sub_array[] = nl2br(substr($row->description, 0,10)).'...'; 
+
+	            $sub_array[] = nl2br(substr($row->nom_cat, 0,15)).' ...';
+
+	            $sub_array[] = nl2br(substr($row->type, 0,15)).'';
+
+	            // $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
+
+	           
+	            $sub_array[] = '<button type="button" name="update" idart="'.$row->idart.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button>'; 
+
+	            $sub_array[] = '<button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';
+	            
+	            $data[] = $sub_array;  
+	       }  
+	       $output = array(  
+	            "draw"                =>     intval($_POST["draw"]),  
+	            "recordsTotal"        =>     $this->crud_model->get_all_data_article(),  
+	            "recordsFiltered"     =>     $this->crud_model->get_filtered_data_article(),  
+	            "data"                =>     $data  
+	       );  
+	       echo json_encode($output);  
+	  }
+
+
+
+	  function operation_article(){
+
+	      if($_FILES["user_image"]["size"] > 0)  
+	      {  
+	           $insert_data = array(  
+	               'nom'     	      =>     $this->input->post('nom'),  
+	               'description'    =>     htmlspecialchars($this->input->post("description")),
+	               'lien'           =>     $this->input->post("lien"),
+	               'idcat'     	    =>     $this->input->post('idcat'), 
+	               'type'     	    =>     $this->input->post('type'), 
+	               'image'          =>     $this->upload_image_article()
+	            );    
+	      }  
+	      else  
+	      {  
+	             $user_image = "icone-user.png";  
+	             $insert_data = array(  
+	               'nom'     	      =>     $this->input->post('nom'),  
+	               'description'    =>     htmlspecialchars($this->input->post("description")),
+	               'lien'           =>     $this->input->post("lien"),
+	               'idcat'     	    =>     $this->input->post('idcat'), 
+	               'type'     	    =>     $this->input->post('type'),
+	               'image'          =>     $user_image
+	            );   
+	      }
+
+	    $requete=$this->crud_model->insert_article($insert_data);
+	    echo("Ajout information avec succès");
+	    
+	  }
+
+	  function modification_article(){
+
+	      if($_FILES["user_image"]["size"] > 0)  
+	      {  
+	           $updated_data = array(  
+	               'nom'     	      =>     $this->input->post('nom'),  
+	               'description'    =>     htmlspecialchars($this->input->post("description")),
+	               'lien'           =>     $this->input->post("lien"),
+	               'idcat'     	    =>     $this->input->post('idcat'), 
+	               'type'     	    =>     $this->input->post('type'), 
+	               'image'          =>     $this->upload_image_article()
+	            );    
+	      }  
+	      
+	      else  
+	      {   
+	           $updated_data = array(  
+	               'nom'     	    =>     $this->input->post('nom'),  
+	               'description'    =>     htmlspecialchars($this->input->post("description")),
+	               'lien'           =>     $this->input->post("lien"),
+	               'idcat'     	    =>     $this->input->post('idcat'), 
+	               'type'     	    =>     $this->input->post('type')
+	            );   
+	      }
+
+	      
+	      $this->crud_model->update_article($this->input->post("idart"), $updated_data);
+
+	      echo("modification avec succès");
+	  }
+
+	  function supression_article(){
+
+	      $this->crud_model->delete_article($this->input->post("idart"));
+	      echo("suppression avec succès");
+	    
+	  }
+
+	  function fetch_single_article()  
+	  {  
+	       $output = array();  
+	       $data = $this->crud_model->fetch_single_article($this->input->post('idart'));  
+	       foreach($data as $row)  
+	       {  
+	            $output['nom'] = $row->nom;  
+	            $output['description'] = $row->description; 
+
+	            $output['lien'] 	= $row->lien;
+	            $output['type'] 	= $row->type;
+	            $output['idcat'] 	= $row->idcat;
+	            
+	            $output['image'] 	= $row->image;
+	            $output['text_description']   ='
+	              <textarea class="form-control textarea" name="description" id="description" placeholder="Parler un peu sur la description de l\'article">
+	                  '.$row->description.'
+	              </textarea>
+	            ';
+
+
+	            if($row->image != '')  
+	            {  
+	                 $output['user_image'] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail" width="300" height="250" /><input type="hidden" name="hidden_user_image" value="'.$row->image.'" />';  
+	            }  
+	            else  
+	            {  
+	                 $output['user_image'] = '<input type="hidden" name="hidden_user_image" value="" />';  
+	            }  
+
+	            
+	       }  
+	       echo json_encode($output);  
+	  }
+
+	  function upload_image_article()  
+      {  
+           if(isset($_FILES["user_image"]))  
+           {  
+                $extension = explode('.', $_FILES['user_image']['name']);  
+                $new_name = rand() . '.' . $extension[1];  
+                $destination = './upload/article/' . $new_name;  
+                move_uploaded_file($_FILES['user_image']['tmp_name'], $destination);  
+                return $new_name;  
+           }  
+      }
+
+	// fin de sript article 
+
+	function pagination_view_article($param1='')
+	{
+	  $limit = $param1;
+	  if ($limit !='') {
+	  	$output = $this->crud_model->fetch_details_view_articles_limit($limit);
+	  }
+	  else{
+	  	$output = $this->crud_model->fetch_details_view_articles();
+	  }
+	  
+	  echo($output);
+	}
+
+	function fetch_search_view_article()
+	{
+	  $output = '';
+	  $query = '';
+	  $etat = '';
+	  if($this->input->post('query'))
+	  {
+	   $query = $this->input->post('query');
+	  }
+	  $data = $this->crud_model->fetch_data_search_view_article($query);
+	 $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($data->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($data->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nom_cat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idart="'.$row->idart.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+
+	    echo($output);
+	  
+	}
+
+
+	 // script de publicite
+      function fetch_publicite(){  
+
+           $fetch_data = $this->crud_model->make_datatables_publicite();  
+           $data = array();  
+           $etat2 = '';
+           $etat = '';
+           foreach($fetch_data as $row)  
+           {  
+                $sub_array = array(); 
+
+                if ($row->type=='texte') {
+                  $etat2 = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+                 ';
+                }
+                elseif ($row->type=='video'){
+                  $etat2 = '
+                    <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                        <span><i class="fa fa-video-camera text-primary"></i></span>
+                    </div>
+                ';
+                }
+                else{
+
+                  $etat2 = '';
+                }
+
+                if ($row->etat == 1) {
+                  $etat = '<a href="javascript:void(0);" type="button" name="pdf" idp="'.$row->idp.'" class="btn btn-success btn-sm desactiver"><i class="fa fa-check"></i> Activé</a>';
+                }
+                else{
+
+                    $etat = '<a href="javascript:void(0);" type="button" name="pdf" idp="'.$row->idp.'" class="btn btn-danger btn-sm  activer"><i class="fa fa-close"></i> Desactivé</a>';
+                }
+
+                $sub_array[] = $etat2; 
+
+
+               
+               
+                // $sub_array[] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail user-avatar bg-success  d-sm-flex" width="50" height="35" />';  
+                $sub_array[] = nl2br(substr($row->nom, 0,20)).'...';  
+                $sub_array[] = nl2br(substr($row->description, 0,10)).'...'; 
+
+                $sub_array[] = nl2br(substr($row->nom_cat, 0,15)).' ...';
+
+                $sub_array[] = nl2br(substr($row->type, 0,15)).'';
+
+                $sub_array[] = nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)); 
+
+               
+                 $sub_array[] = $etat; 
+
+                $sub_array[] = '<button type="button" name="delete2" idp="'.$row->idp.'" class="btn btn-danger btn-circle btn-sm delete2"><i class="fa fa-trash"></i></button>';
+                
+                $data[] = $sub_array;  
+           }  
+           $output = array(  
+                "draw"                =>     intval($_POST["draw"]),  
+                "recordsTotal"        =>     $this->crud_model->get_all_data_publicite(),  
+                "recordsFiltered"     =>     $this->crud_model->get_filtered_data_publicite(),  
+                "data"                =>     $data  
+           );  
+           echo json_encode($output);  
+      }
+
+      
+
+      function operation_publicite()
+      {
+          if($this->input->post('checkbox_value'))
+          {
+             $id = $this->input->post('checkbox_value');
+             for($count = 0; $count < count($id); $count++)
+             {
+                $insert_data = array(  
+                   'idart'    =>     $id[$count]  
+                ); 
+                $this->crud_model->insert_publicite($insert_data);
+             }
+             echo("suppression avec succès");
+          }
+
+      }
+
+      function activation_publicite(){
+
+          $updated_data = array(  
+             'etat'  =>     1
+          ); 
+
+          $this->crud_model->update_publicite($this->input->post("idp"), $updated_data);
+          echo("la publicité est activée avec succès 👌");
+      }
+
+      function desactivation_publicite(){
+
+          $updated_data = array(  
+             'etat'  =>     0
+          ); 
+
+          $this->crud_model->update_publicite($this->input->post("idp"), $updated_data);
+          echo("🏧 la publicité est desactivée avec succès🏧");
+      }
+
+      
+      function supression_publicite(){
+ 
+          $this->crud_model->delete_publicite($this->input->post("idp"));
+          echo("suppression avec succès");
+        
+      }
+  // fin de sript publicite 
+
+       function upload_galery2()
+	   {
+	      sleep(3);
+	      if($_FILES["files"]["name"] != '')
+	      {
+	       $output = '';
+	       $config["upload_path"] = './upload/galery/';
+	       $config["allowed_types"] = 'gif|jpg|png|webp';
+	       $this->load->library('upload', $config);
+	       $this->upload->initialize($config);
+	       for($count = 0; $count<count($_FILES["files"]["name"]); $count++)
+	       {
+	        $extension = explode('.', $_FILES["files"]["name"][$count]);  
+	        $new_name = rand() . '.' . $extension[1];
+
+	        $_FILES["file"]["name"] = $new_name;
+	        $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+	        $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+	        $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+	        $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+	        // echo($_FILES["files"]["name"][$count]).'<br>';
+	        // echo($new_name).PHP_EOL;
+
+
+	        if($this->upload->do_upload('file'))
+	        {
+	         $data = $this->upload->data();
+
+	         $insert_data = array(  
+	             'image'         =>     $new_name              
+	         ); 
+	         $requete=$this->crud_model->insert_galery2($insert_data);
+
+	         $output .= '
+	         <div class="col-md-3" align="center" style="margin-bottom:24px;">
+	          <img src="'.base_url().'upload/galery/'.$data["file_name"].'" class="img-thumbnail img-responsive" style="height: 200px;" />
+	            <br />
+	            <input type="checkbox" name="images[]" class="select" value="upload/galery/'.$data["file_name"].'" />
+	         </div>
+	         ';
+	        }
+	       }
+	       echo $output;   
+	      }
+	   }
+
+	   // pagination contact 
+	  function pagination_galery_member2()
+	  {
+
+	  $this->load->library("pagination");
+	  $config = array();
+	  $config["base_url"] = "#";
+	  $config["total_rows"] = $this->crud_model->fetch_pagination_galery_personnel();
+	  $config["per_page"] = 4;
+	  $config["uri_segment"] = 3;
+	  $config["use_page_numbers"] = TRUE;
+	  $config["full_tag_open"] = '<ul class="pagination">';
+	  $config["full_tag_close"] = '</ul>';
+	  $config["first_tag_open"] = '<li class="page-item">';
+	  $config["first_tag_close"] = '</li>';
+	  $config["last_tag_open"] = '<li class="page-item">';
+	  $config["last_tag_close"] = '</li>';
+	  $config['next_link'] = '<li class="page-item active"><i class="btn btn-info">&gt;&gt;</i>';
+	  $config["next_tag_open"] = '<li class="page-item">';
+	  $config["next_tag_close"] = '</li>';
+	  $config["prev_link"] = '<li class="page-item active"><i class="btn btn-info">&lt;&lt;</i>';
+	  $config["prev_tag_open"] = "<li class='page-item'>";
+	  $config["prev_tag_close"] = "</li>";
+	  $config["cur_tag_open"] = "<li class='page-item active'><a href='#' class='page-link'>";
+	  $config["cur_tag_close"] = "</a></li>";
+	  $config["num_tag_open"] = "<li class='page-item'>";
+	  $config["num_tag_close"] = "</li>";
+	  $config["num_links"] = 1;
+	  $this->pagination->initialize($config);
+	  $page = $this->uri->segment(3);
+	  $start = ($page - 1) * $config["per_page"];
+
+	  $output = array(
+	   'pagination_link' => $this->pagination->create_links(),
+	   'country_table'   => $this->crud_model->fetch_details_pagination_galery2($config["per_page"], $start)
+	  );
+	  echo json_encode($output);
+	  }
+
+	  function supression_photo_galery_personnele(){
+
+	    $this->crud_model->delete_photo_galery_personnele($this->input->post("idg"));
+	    echo("suppression avec succès");
+
+	  }
+
+	  function modification_galery_entrep_personnele(){
+  
+          $updated_data = array(  
+                 'url'            =>     $this->input->post('url')
+          );
+  
+          $this->crud_model->update_galery_entrep_personnele($this->input->post("idg"), $updated_data);
+          echo("modification avec succès");
+      }
+
+    function fetch_single_galery_entrep_personnele()  
+    {  
+         $output = array();  
+         $data = $this->crud_model->fetch_single_galery_entreprise_personnele($_POST["idg"]);  
+         foreach($data as $row)  
+         {  
+              $output['url']    = $row->url;  
+              
+             
+         }  
+         echo json_encode($output);  
+    }
+
+    function download_photo_galery()
+   {
+      if($this->input->post('images'))
+      {
+        $this->load->library('zip');
+        $images = $this->input->post('images');
+        foreach($images as $image)
+        {
+          $this->zip->read_file($image);
+          // echo($image);
+        }
+        $this->zip->download(''.time().'.zip');
+      }
+   }
+
+
+      
+
+
+
+
+
+
 
 
 

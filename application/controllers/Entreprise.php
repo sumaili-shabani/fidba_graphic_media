@@ -13,8 +13,8 @@ class entreprise extends CI_Controller
 	      	redirect(base_url().'login');
 	  }
 	  $this->load->library('form_validation');
-	  $this->load->library('encrypt');
-      $this->load->library('pdf');
+	  $this->load->library('encryption');
+      // $this->load->library('pdf');
 	  $this->load->model('crud_model'); 
 
 	  $this->load->helper('url');
@@ -35,6 +35,7 @@ class entreprise extends CI_Controller
 
 	function index(){
 		$data['title']="mon profile entreprise";
+    $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
 		$this->load->view('backend/entreprise/templete_admin', $data);
   		// $this->load->view('backend/entreprise/templete_admin', $data);
 	}
@@ -42,17 +43,26 @@ class entreprise extends CI_Controller
 	
 
 	function dashbord(){
-		  $data['title']="Tableau de bord";
-	      // $data['nombre_location'] = $this->crud_model->statistiques_nombre("profile_location");
+		    $data['title']="Tableau de bord";
+	      
+        $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+        // $data['nombre_location'] = $this->crud_model->statistiques_nombre("profile_location");
+
+        $data['nombre_client'] = $this->crud_model->statistiques_nombre_tag_by_column("users", 2);
+
+        $data['nombre_membre'] = $this->crud_model->statistiques_nombre_tag_by_column("users", 3);
+
+        $data['nombre_paiement'] = $this->crud_model->statistiques_nombre("paiement");
+
+        $data['nombre_users'] = $this->crud_model->statistiques_nombre("users");
+
+        $data['nombre_publicite']   = $this->crud_model->statistiques_nombre("publicite");
+        $data['nombre_category']   = $this->crud_model->statistiques_nombre("category");
+
+        $data['nombre_pub']   = $this->crud_model->statistiques_nombre("galery2");
+        $data['nombre_role']   = $this->crud_model->statistiques_nombre("role");
 
 
-	      $data['nombre_client'] = $this->crud_model->statistiques_nombre_tag_by_column("users", 2);
-
-	      $data['nombre_membre'] = $this->crud_model->statistiques_nombre_tag_by_column("users", 3);
-
-	      $data['nombre_paiement'] = $this->crud_model->statistiques_nombre("paiement");
-
-	      $data['nombre_users'] = $this->crud_model->statistiques_nombre("users");
 	      $this->load->view('backend/entreprise/dashbord', $data);
 	}
 
@@ -60,6 +70,7 @@ class entreprise extends CI_Controller
 
 	function profile(){
       $data['title']="mon profile entreprise";
+      $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
       $data['users'] = $this->crud_model->fetch_connected($this->connected);
       // $this->load->view('backend/user/viewx', $data);
       $this->load->view('backend/entreprise/profile', $data);
@@ -67,18 +78,21 @@ class entreprise extends CI_Controller
 
     function basic(){
         $data['title']="Information basique de mon compte";
+        $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
         $data['users'] = $this->crud_model->fetch_connected($this->connected);
         $this->load->view('backend/entreprise/basic', $data);
     }
 
     function basic_image(){
         $data['title']="Information basique de ma photo";
+        $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
         $data['users'] = $this->crud_model->fetch_connected($this->connected);
         $this->load->view('backend/entreprise/basic_image', $data);
     }
 
     function basic_secure(){
         $data['title']="Paramètrage de sécurité de mon compte";
+        $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
         $data['users'] = $this->crud_model->fetch_connected($this->connected);
         $this->load->view('backend/entreprise/basic_secure', $data);
     }
@@ -91,9 +105,17 @@ class entreprise extends CI_Controller
 
     function client(){
 		$data['title']="Paramétrage  des clients";
+    $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
 		$data['entreprises']  = $this->crud_model->Select_entreprises();
 		$this->load->view('backend/entreprise/client', $data);		
 	}
+
+
+  function publicity_personnele(){
+      $data['title']="Paramétrage  des publicités";
+      $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+      $this->load->view('backend/entreprise/publicity_personnele', $data);  
+  }
 
 	  // script de client
   function fetch_client(){  
@@ -432,6 +454,140 @@ class entreprise extends CI_Controller
 	  }
 
   }
+
+
+  function upload_galery2()
+   {
+      sleep(3);
+      if($_FILES["files"]["name"] != '')
+      {
+       $output = '';
+       $config["upload_path"] = './upload/galery/';
+       $config["allowed_types"] = 'gif|jpg|png|webp';
+       $this->load->library('upload', $config);
+       $this->upload->initialize($config);
+       for($count = 0; $count<count($_FILES["files"]["name"]); $count++)
+       {
+        $extension = explode('.', $_FILES["files"]["name"][$count]);  
+        $new_name = rand() . '.' . $extension[1];
+
+        $_FILES["file"]["name"] = $new_name;
+        $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+        $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+        $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+        $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+
+        // echo($_FILES["files"]["name"][$count]).'<br>';
+        // echo($new_name).PHP_EOL;
+
+
+        if($this->upload->do_upload('file'))
+        {
+         $data = $this->upload->data();
+
+         $insert_data = array(  
+             'image'         =>     $new_name              
+         ); 
+         $requete=$this->crud_model->insert_galery2($insert_data);
+
+         $output .= '
+         <div class="col-md-3" align="center" style="margin-bottom:24px;">
+          <img src="'.base_url().'upload/galery/'.$data["file_name"].'" class="img-thumbnail img-responsive" style="height: 200px;" />
+            <br />
+            <input type="checkbox" name="images[]" class="select" value="upload/galery/'.$data["file_name"].'" />
+         </div>
+         ';
+        }
+       }
+       echo $output;   
+      }
+   }
+
+   // pagination contact 
+    function pagination_galery_member2()
+    {
+
+    $this->load->library("pagination");
+    $config = array();
+    $config["base_url"] = "#";
+    $config["total_rows"] = $this->crud_model->fetch_pagination_galery_personnel();
+    $config["per_page"] = 4;
+    $config["uri_segment"] = 3;
+    $config["use_page_numbers"] = TRUE;
+    $config["full_tag_open"] = '<ul class="pagination">';
+    $config["full_tag_close"] = '</ul>';
+    $config["first_tag_open"] = '<li class="page-item">';
+    $config["first_tag_close"] = '</li>';
+    $config["last_tag_open"] = '<li class="page-item">';
+    $config["last_tag_close"] = '</li>';
+    $config['next_link'] = '<li class="page-item active"><i class="btn btn-info">&gt;&gt;</i>';
+    $config["next_tag_open"] = '<li class="page-item">';
+    $config["next_tag_close"] = '</li>';
+    $config["prev_link"] = '<li class="page-item active"><i class="btn btn-info">&lt;&lt;</i>';
+    $config["prev_tag_open"] = "<li class='page-item'>";
+    $config["prev_tag_close"] = "</li>";
+    $config["cur_tag_open"] = "<li class='page-item active'><a href='#' class='page-link'>";
+    $config["cur_tag_close"] = "</a></li>";
+    $config["num_tag_open"] = "<li class='page-item'>";
+    $config["num_tag_close"] = "</li>";
+    $config["num_links"] = 1;
+    $this->pagination->initialize($config);
+    $page = $this->uri->segment(3);
+    $start = ($page - 1) * $config["per_page"];
+
+    $output = array(
+     'pagination_link' => $this->pagination->create_links(),
+     'country_table'   => $this->crud_model->fetch_details_pagination_galery2($config["per_page"], $start)
+    );
+    echo json_encode($output);
+    }
+
+    function supression_photo_galery_personnele(){
+
+      $this->crud_model->delete_photo_galery_personnele($this->input->post("idg"));
+      echo("suppression avec succès");
+
+    }
+
+    function modification_galery_entrep_personnele(){
+  
+          $updated_data = array(  
+                 'url'            =>     $this->input->post('url')
+          );
+  
+          $this->crud_model->update_galery_entrep_personnele($this->input->post("idg"), $updated_data);
+          echo("modification avec succès");
+      }
+
+    function fetch_single_galery_entrep_personnele()  
+    {  
+         $output = array();  
+         $data = $this->crud_model->fetch_single_galery_entreprise_personnele($_POST["idg"]);  
+         foreach($data as $row)  
+         {  
+              $output['url']    = $row->url;  
+              
+             
+         }  
+         echo json_encode($output);  
+    }
+
+    function download_photo_galery()
+   {
+      if($this->input->post('images'))
+      {
+        $this->load->library('zip');
+        $images = $this->input->post('images');
+        foreach($images as $image)
+        {
+          $this->zip->read_file($image);
+          // echo($image);
+        }
+        $this->zip->download(''.time().'.zip');
+      }
+   }
+
+
 
 
 

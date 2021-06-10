@@ -25,11 +25,18 @@ class crud_model extends CI_Model{
   var $order_column4 = array(null, "nom","product_name","product_price","first_name", "id_user","Qte");
   // fin produit
 
-  // opertion galery produit
-  var $table5 = "profile_galery";  
-  var $select_column5 = array("idgalery","product_id", "photos", "product_name", "product_price", "Qte");  
-  var $order_column5 = array(null, "product_id", "photos", "product_name", "product_price", "Qte");
-  // fin produit
+  // // opertion galery produit
+  // var $table5 = "profile_galery";  
+  // var $select_column5 = array("idgalery","product_id", "photos", "product_name", "product_price", "Qte");  
+  // var $order_column5 = array(null, "product_id", "photos", "product_name", "product_price", "Qte");
+  // // fin produit
+
+  // opertion category information
+  var $table5 = "profile_article";  
+  var $select_column5 = array("idart", "nom","description","lien","image", 
+    "type","idcat","nom_cat","created_at");  
+  var $order_column5 = array(null, "nom","description","lien","type","idcat","nom_cat", "created_at");
+  // fin category
 
    // opertion galery produit
   var $table6 = "profile_entree_stock";  
@@ -48,6 +55,21 @@ class crud_model extends CI_Model{
   var $select_column8 = array("id", "first_name", "last_name", "email","image","telephone","full_adresse","biographie","date_nais","facebook","twitter","linkedin","idrole","sexe");  
   var $order_column8 = array(null, "first_name", "last_name","telephone","sexe","id", null, null);
   // fin information
+
+
+
+   //tbl_info
+  var $table9 = "tbl_info";  
+  var $select_column9 = array("idinfo", "nom_site", "icone", "tel1","tel2","adresse","facebook","twitter","linkedin","email","termes","confidentialite","description","mission","objectif","blog");  
+  var $order_column9 = array(null, "nom_site", "icone","tel1","tel2","description","adresse","email", null, null);
+  // fin information
+
+  // opertion category information
+  var $table10 = "profile_publicite";  
+  var $select_column10 = array("idart","idp","etat", "nom","description","lien","image", 
+    "type","idcat","nom_cat","created_at");  
+  var $order_column10 = array(null, "nom","idp","etat","description","lien","type","idcat","nom_cat", "created_at");
+  // fin category
 
    // contact
   var $table12 = "contact";  
@@ -610,7 +632,8 @@ class crud_model extends CI_Model{
     {  
           
          $this->db->select($this->select_column8);  
-         $this->db->from($this->table8);  
+         $this->db->from($this->table8);
+          $this->db->limit(20);    
          if(isset($_POST["search"]["value"]))  
          {  
               $this->db->like("first_name", $_POST["search"]["value"]);  
@@ -678,30 +701,39 @@ class crud_model extends CI_Model{
 
     //fin de script users
 
+
+
+    
+
+
     // script pour information du produit en stock
 
-    function fetch_details_view_product($limit, $start)
+    function fetch_details_view_site($limit, $start)
     {
       $output = '';
       $this->db->select("*");
-      $this->db->from("profile_product");
-      $this->db->order_by("product_id", "DESC");
+      $this->db->from("tbl_info");
+      $this->db->order_by("idinfo", "DESC");
       $this->db->limit($limit, $start);
       $query = $this->db->get();
       $output .= '
       <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
-          <thead>  
-            <tr>         
-               <th width="10%">Image</th>
-               <th width="15%">Nom du produit</th>  
-               <th width="10%">Prix</th>
-               <th width="10%">Catégorie produit</th>
-               <th width="15%">Qte en stock</th>
-               <th width="10%">Utilisateur action</th>
-               <th width="5%">Modifier</th> 
-               <th width="5%">Supprimer</th>  
-            </tr> 
-         </thead> 
+        <thead>  
+              <tr>  
+                   <th width="10%">Icone</th>  
+                   <th width="10%">Nom du site</th>  
+                   <th width="15%">Adresse</th>
+                   <th width="5%">Téléphone principal</th>
+                   <th width="15%">Adresse</th>
+                   <th width="5%">Facebook</th>
+                   <th width="5%">Twitter</th>  
+                   <th width="5%">Linkedin</th> 
+                  
+                   <th width="5%">Modifier</th> 
+                   <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead>
+
       ';
       if ($query->num_rows() < 0) {
         
@@ -712,16 +744,20 @@ class crud_model extends CI_Model{
         {
          $output .= '
          <tr>
-          <td><img src="'.base_url().'upload/product/'.$row->product_image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+          <td><img src="'.base_url().'upload/tbl_info/'.$row->icone.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
 
-          <td>'.nl2br(substr($row->product_name, 0,10)).'...'.'</td>
-          <td>'.nl2br(substr($row->product_price, 0,10)).' $'.'</td>
-          <td>'.nl2br(substr($row->nom, 0,20)).' ...'.'</td>
-          <td>'.nl2br(substr($row->Qte, 0,10)).' '.'</td>
-          <td>'.nl2br(substr($row->first_name, 0,10)).'...'.'</td>
+          <td>'.nl2br(substr($row->nom_site, 0,10)).'...</td>
+          <td>'.nl2br(substr($row->email, 0,10)).'...</td>
+          <td>'.nl2br(substr($row->tel1, 0,10)).' ...</td>
+          <td>'.nl2br(substr($row->adresse, 0,10)).'...</td>
+
+          <td>'.nl2br(substr($row->facebook, 0,10)).'...</td>
+          <td>'.nl2br(substr($row->twitter, 0,10)).'...</td>
+          <td>'.nl2br(substr($row->linkedin, 0,10)).'...</td>
           
-          <td><button type="button" name="update" product_id="'.$row->product_id.'" class="btn btn-warning btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
-          <td><button type="button" name="delete" product_id="'.$row->product_id.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+          <td><button type="button" name="update" idinfo="'.$row->idinfo.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idinfo="'.$row->idinfo.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
           
 
          </tr>
@@ -730,37 +766,57 @@ class crud_model extends CI_Model{
       }
       $output .= '
           <tfoot>  
-            <tr>         
-               <th width="10%">Image</th>
-               <th width="15%">Nom du produit</th>  
-               <th width="10%">Prix</th>
-               <th width="10%">Catégorie produit</th>
-               <th width="15%">Qte en stock</th>
-               <th width="10%">Utilisateur action</th>
-               <th width="5%">Modifier</th> 
-               <th width="5%">Supprimer</th>  
-            </tr> 
-         </tfoot>   
-            
-        </table>';
+              <tr>  
+                   <th width="10%">Icone</th>  
+                   <th width="10%">Nom du site</th>  
+                   <th width="15%">Adresse</th>
+                   <th width="5%">Téléphone principal</th>
+                   <th width="15%">Adresse</th>
+                   <th width="5%">Facebook</th>
+                   <th width="5%">Twitter</th>  
+                   <th width="5%">Linkedin</th> 
+                  
+                   <th width="5%">Modifier</th> 
+                   <th width="5%">Supprimer</th>  
+              </tr>  
+         </tfoot>    
+        
+    </table>';
       return $output;
     }
 
 
-   function fetch_data_search_view_product($query)
+   function fetch_data_search_view_site($query)
    {
       $this->db->select("*");
-      $this->db->from("profile_product");
+      $this->db->from("tbl_info");
       $this->db->limit(10);
       if($query != '')
       {
-       $this->db->like('product_id', $query);
-       $this->db->or_like('Qte', $query);
-       $this->db->or_like('product_name', $query);
-       $this->db->or_like('product_price', $query);
-       $this->db->or_like('nom', $query);
+       $this->db->like('idinfo', $query);
+       $this->db->or_like('nom_site', $query);
+       $this->db->or_like('tel1', $query);
+       $this->db->or_like('tel2', $query);
+       $this->db->or_like('email', $query);
       }
-      $this->db->order_by('product_id', 'DESC');
+      $this->db->order_by('idinfo', 'DESC');
+      return $this->db->get();
+   }
+
+   function fetch_data_search_view_article($query)
+   {
+      $this->db->select("*");
+      $this->db->from("profile_article");
+      $this->db->limit(10);
+      if($query != '')
+      {
+       $this->db->like('idart', $query);
+       $this->db->or_like('nom', $query);
+       $this->db->or_like('description', $query);
+       $this->db->or_like('type', $query);
+       $this->db->or_like('nom_cat', $query);
+      }
+      $this->db->order_by('idart', 'DESC');
       return $this->db->get();
    }
 
@@ -999,10 +1055,10 @@ class crud_model extends CI_Model{
       return $query->num_rows();
     }
 
-    // script pour information  des produits en stock
-    function count_all_view_product()
+    // script pour information  de site
+    function count_all_view_site()
     {
-      $query = $this->db->get("profile_product");
+      $query = $this->db->get("tbl_info");
       $this->db->limit(30);
       return $query->num_rows();
     }
@@ -2423,6 +2479,450 @@ class crud_model extends CI_Model{
      $query=$this->db->get('contact');  
      return $query->result();  
   }
+
+
+  function Select_articles()
+  {
+      $this->db->order_by('nom','ASC');
+      $this->db->limit(50);
+      return $this->db->get('profile_article');
+  }
+
+  function Select_category()
+  {
+      $this->db->order_by('nom','ASC');
+      $this->db->limit(50);
+      return $this->db->get('category');
+  }
+
+
+  // script pour nos article 
+  function make_query_article()  
+  {  
+      
+     $this->db->select($this->select_column5);  
+     $this->db->from($this->table5);
+     $this->db->limit(10);
+     
+     if(isset($_POST["search"]["value"]))  
+     {  
+          $this->db->like("idart", $_POST["search"]["value"]);  
+          $this->db->or_like("nom", $_POST["search"]["value"]);
+          $this->db->or_like("description", $_POST["search"]["value"]);
+          $this->db->or_like("lien", $_POST["search"]["value"]);
+          $this->db->or_like("nom_cat", $_POST["search"]["value"]);
+          $this->db->or_like("type", $_POST["search"]["value"]);
+     }  
+     if(isset($_POST["order"]))  
+     {  
+          $this->db->order_by($this->order_column5[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
+     }  
+     else  
+     {  
+          $this->db->order_by('idart', 'DESC');  
+     }  
+  }
+
+   function make_datatables_article(){  
+         $this->make_query_article();  
+         if($_POST["length"] != -1)  
+         {  
+              $this->db->limit($_POST['length'], $_POST['start']);  
+         }  
+         $query = $this->db->get();  
+         return $query->result();  
+    }
+
+    function get_filtered_data_article(){  
+         $this->make_query_article();  
+         $query = $this->db->get();  
+         return $query->num_rows();  
+    }       
+    function get_all_data_article()  
+    {  
+         $this->db->select("*");  
+         $this->db->from($this->table5);  
+         return $this->db->count_all_results();  
+    }
+
+    function insert_article($data)  
+    {  
+         $this->db->insert('article', $data);  
+    }
+
+    
+    function update_article($idart, $data)  
+    {  
+         $this->db->where("idart", $idart);  
+         $this->db->update("article", $data);  
+    }
+
+
+    function delete_article($idart)  
+    {  
+         $this->db->where("idart", $idart);  
+         $this->db->delete("article");  
+    }
+
+    function fetch_single_article($idart)  
+    {  
+         $this->db->where("idart", $idart);  
+         $query=$this->db->get('article');  
+         return $query->result();  
+    } 
+  ///fin de la article information
+
+
+    // script pour information  des produits en stock
+    function count_all_view_articles()
+    {
+      $query = $this->db->get("profile_article");
+      $this->db->limit(30);
+      return $query->num_rows();
+    }
+
+    function fetch_details_view_articles()
+    {
+      $output = '';
+       $etat = '';
+      $this->db->select("*");
+      $this->db->from("profile_article");
+      $this->db->order_by("idart", "DESC");
+      $this->db->limit(10);
+      $query = $this->db->get();
+      $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($query->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($query->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nom_cat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idart="'.$row->idart.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+      return $output;
+    }
+
+    // filtrage avec limit 
+    function fetch_details_view_articles_limit($limit)
+    {
+      $output = '';
+       $etat = '';
+      $this->db->select("*");
+      $this->db->from("profile_article");
+      $this->db->order_by("idart", "DESC");
+      $this->db->limit($limit);
+      $query = $this->db->get();
+      $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($query->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($query->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nom_cat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idart="'.$row->idart.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idart="'.$row->idart.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+      return $output;
+    }
+
+  // script pour nos publicite 
+  function make_query_publicite()  
+  {  
+      
+     $this->db->select($this->select_column10);  
+     $this->db->from($this->table10);
+     $this->db->limit(50);
+     
+     if(isset($_POST["search"]["value"]))  
+     {  
+          $this->db->like("idart", $_POST["search"]["value"]);  
+          $this->db->or_like("nom", $_POST["search"]["value"]);
+          $this->db->or_like("description", $_POST["search"]["value"]);
+          $this->db->or_like("lien", $_POST["search"]["value"]);
+          $this->db->or_like("nom_cat", $_POST["search"]["value"]);
+          $this->db->or_like("type", $_POST["search"]["value"]);
+          $this->db->or_like("etat", $_POST["search"]["value"]);
+     }  
+     if(isset($_POST["order"]))  
+     {  
+          $this->db->order_by($this->order_column10[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
+     }  
+     else  
+     {  
+          $this->db->order_by('idp', 'DESC');  
+     }  
+  }
+
+   function make_datatables_publicite(){  
+         $this->make_query_publicite();  
+         if($_POST["length"] != -1)  
+         {  
+              $this->db->limit($_POST['length'], $_POST['start']);  
+         }  
+         $query = $this->db->get();  
+         return $query->result();  
+    }
+
+    function get_filtered_data_publicite(){  
+         $this->make_query_publicite();  
+         $query = $this->db->get();  
+         return $query->num_rows();  
+    }       
+    function get_all_data_publicite()  
+    {  
+         $this->db->select("*");  
+         $this->db->from($this->table10);  
+         return $this->db->count_all_results();  
+    }
+
+    function insert_publicite($data)  
+    {  
+         $this->db->insert('publicite', $data);  
+    }
+
+    
+    function update_publicite($idp, $data)  
+    {  
+         $this->db->where("idp", $idp);  
+         $this->db->update("publicite", $data);  
+    }
+
+
+    function delete_publicite($idp)  
+    {  
+         $this->db->where("idp", $idp);  
+         $this->db->delete("publicite");  
+    }
+
+    function fetch_single_publicite($idp)  
+    {  
+         $this->db->where("idp", $idp);  
+         $query=$this->db->get('publicite');  
+         return $query->result();  
+    } 
+    //fin de la publicite information
+
+    //insertion des photos pour la galerie
+    function insert_galery2($data)  
+    {  
+        $this->db->insert('galery2', $data);  
+    }
+
+    // fin pagination
+    function fetch_pagination_galery_personnel(){
+      $this->db->order_by("idg", "DESC");
+      $query = $this->db->get("galery2");
+      return $query->num_rows();
+    }
+
+    // pagination galery utilisateur
+    function fetch_details_pagination_galery2($limit, $start){
+      $output = '';
+      $this->db->select("*");
+      $this->db->from("galery2");
+      // $this->db->order_by("nom", "ASC");
+      $this->db->order_by("idg", "DESC");
+
+      $this->db->limit($limit, $start);
+      $query = $this->db->get();
+      
+      foreach($query->result() as $row)
+      {
+        
+       $output .= '
+
+          <div class="col-md-3" align="center" style="margin-bottom:24px;">
+              <img src="'.base_url().'upload/galery/'.$row->image.'" class="img-thumbnail img-responsive" style="height: 200px;" />
+                <br />
+            <input type="checkbox" name="images[]" idg="'.$row->idg.'" class="select checkbox_id image_galery" value="upload/galery/'.$row->image.'" /> &nbsp;
+            <a href="javascript:void(0);" class="text-danger supprimer" idg="'.$row->idg.'">
+              <i class="fa fa-trash"></i> supprimer
+            </a>
+
+            &nbsp;
+            <a href="javascript:void(0);" class="text-primary update" idg="'.$row->idg.'">
+              <i class="fa fa-edit"></i> editer
+            </a>
+
+         </div>
+       ';
+      }
+      
+      return $output;
+    }
+    // fin pagination
+
+    //suppression des photos pour la galerie
+    function delete_photo_galery_personnele($idg)  
+    {  
+         $this->db->where("idg", $idg);  
+         $this->db->delete("galery2");  
+    }
+    // pagination contact
+
+    function update_galery_entrep_personnele($idg, $data)  
+    {  
+         $this->db->where("idg", $idg);  
+         $this->db->update("galery2", $data);  
+    }
+
+    function fetch_single_galery_entreprise_personnele($idg)  
+    {  
+         $this->db->where("idg", $idg);  
+         $query=$this->db->get('galery2');  
+         return $query->result();  
+    } 
 
 
 

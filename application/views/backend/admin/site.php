@@ -30,17 +30,35 @@
                    <div class="col-md-12 card">
                        <div class="row card-body">
                             <!-- mes scripts commencent -->
-                        	<div class="col-md-12">
-                                 <div class="row">
-                                   <div class="col-md-12">
-                                     <button class="btn btn-dim btn-sm btn-outline-secondary pull-right  mb-4" id="add_button" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus"></i>Effectuer l'opération</button>
-                                   </div>
-                                 </div>
-                              </div>
+
+                            <div class="col-md-12">
+                               <button class="btn btn-dim btn-sm btn-outline-primary pull-right  mb-2" id="add_button" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus"></i>Effectuer l'opération</button>
+                            </div>
+                        	
                               <!-- insertion de tableau -->
+
                               <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+
+                                <div class="row">
+                                  <div class="col-md-4">
+                                   
+                                  </div>
+                                  <div class="col-md-4"></div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                           <span class="input-group-addon" style="margin-top: 8px;"><i class="fa fa-search mr-2"></i> Recherche &nbsp;</span>
+                                           <input type="text" name="search_text" id="search_text" placeholder="Recherche..." class="form-control" />
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                              </div>
+
+                              <div class="col-md-12">
+                                <div class="table-responsive" id="country_table">
+                                    <!-- <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
 	                                    <thead>  
                                             <tr>  
                                                  <th width="10%">Icone</th>  
@@ -73,9 +91,24 @@
                                             </tr>  
                                        </tfoot>    
 	                                    
-	                                </table>
+	                                </table> -->
                                 </div>
                               </div>
+
+
+                              <div class="col-md-12 mb-2">
+                                <div class="row">
+                                  <div class="col-md-4"></div>
+                                  <div class="col-md-4">
+                                    <nav class="pagination" id="pagination_link">
+                                  
+                                    </nav>
+                                  </div>
+                                  <div class="col-md-4"></div>
+                                </div>
+                              </div>
+
+
                               <!-- fin insertion tableau -->
                         	<!-- fin de mes scripts -->
                        </div>
@@ -183,29 +216,29 @@
 
                         <!-- debit ajout -->
                         <div class="form-group jf-inputwithicon col-md-12">
-                            <label><i class="fa fa-pencil"></i> Description du site</label>
-                            <textarea class="form-control" name="description" id="description" placeholder="Description du site"></textarea>
+                            <label><i class="fa fa-pencil"></i> À-propos du site</label>
+                            <textarea class="form-control" name="description" id="description" placeholder="À-propos"></textarea>
                         </div>
                         <!-- fin ajout -->
 
                         <!-- debit ajout -->
                         <div class="form-group jf-inputwithicon col-md-12">
-                            <label><i class="fa fa-pencil"></i> La mission du site</label>
-                            <textarea class="form-control" name="mission" id="mission" placeholder=" La mission du site"></textarea>
+                            <label><i class="fa fa-pencil"></i> Pourquoi  penser au blog ?</label>
+                            <textarea class="form-control" name="mission" id="mission" placeholder="Pourquoi  penser au blog ?"></textarea>
                         </div>
                         <!-- fin ajout -->
 
                         <!-- debit ajout -->
                         <div class="form-group jf-inputwithicon col-md-12">
-                            <label><i class="fa fa-pencil"></i> L'objectif du site</label>
-                            <textarea class="form-control" name="objectif" id="objectif" placeholder=" L'objectif du site"></textarea>
+                            <label><i class="fa fa-pencil"></i> Toute une communauté autours du blog Fidba Graphics</label>
+                            <textarea class="form-control" name="objectif" id="objectif" placeholder="la communauté autours du blog Fidba Graphics"></textarea>
                         </div>
                         <!-- fin ajout -->
 
                         <!-- debit ajout -->
                         <div class="form-group jf-inputwithicon col-md-12">
-                            <label><i class="fa fa-pencil"></i> Blog pour information</label>
-                            <textarea class="form-control" name="blog" id="blog" placeholder=" Blog pour information"></textarea>
+                            <label><i class="fa fa-pencil"></i> Notre blog & ses rubriques </label>
+                            <textarea class="form-control" name="blog" id="blog" placeholder="Notre blog & ses rubriques"></textarea>
                         </div>
                         <!-- fin ajout -->
 
@@ -227,7 +260,7 @@
 
 	                            	<input type="hidden" name="idinfo" id="idinfo" />
 						            <input type="hidden" name="operation" id="operation" />
-						            <input type="submit" name="action" id="action" class="btn btn-secondary" value="Add" />
+						            <input type="submit" name="action" id="action" class="btn btn-primary" value="Add" />
 	                            </div>
 	                            <div class="pt-3">
 	                                <a href="javascript:void(0);" data-dismiss="modal" class="link link-danger">Annuler l'opération</a>
@@ -244,6 +277,8 @@
     </div>
     <!-- fin modal-->
 
+
+   
 
 
   	
@@ -262,21 +297,21 @@
                $('#user_uploaded_image').html('');  
           })  
           // var dataTable = $('#user_data').DataTable();
-          var dataTable = $('#user_data').DataTable({  
-               "processing":true,  
-               "serverSide":true,  
-               "order":[],  
-               "ajax":{  
-                    url:"<?php echo base_url() . 'admin/fetch_tbl_info'; ?>",  
-                    type:"POST"  
-               },  
-               "columnDefs":[  
-                    {  
-                         "targets":[0, 3, 4],  
-                         "orderable":false,  
-                    },  
-               ],  
-          });
+          // var dataTable = $('#user_data').DataTable({  
+          //      "processing":true,  
+          //      "serverSide":true,  
+          //      "order":[],  
+          //      "ajax":{  
+          //           url:"<?php echo base_url() . 'admin/fetch_site'; ?>",  
+          //           type:"POST"  
+          //      },  
+          //      "columnDefs":[  
+          //           {  
+          //                "targets":[0, 3, 4],  
+          //                "orderable":false,  
+          //           },  
+          //      ],  
+          // });
 
           $(document).on('submit', '#user_form', function(event){  
                event.preventDefault();  
@@ -326,7 +361,7 @@
                                 swal("Succès!!!", message, "success"); 
                                 $('#user_form')[0].reset();  
                                 $('#userModal').modal('hide');  
-                                dataTable.ajax.reload();  
+                                load_country_data(1); 
                            }  
                       });
                         // alert("insertion");
@@ -346,7 +381,7 @@
                          		  swal("Succès!!!", message, "success"); 
                                   $('#user_form')[0].reset();  
                                   $('#userModal').modal('hide');  
-                                  dataTable.ajax.reload();  
+                                  load_country_data(1); 
                              }  
                         });
 
@@ -415,7 +450,7 @@
 
                          var message = data;
                          swal("Succès!!!", erreur, "success");
-                         dataTable.ajax.reload();
+                         load_country_data(1);
                       }
                     });
 	          }
@@ -431,13 +466,65 @@
           });
 
           const showErrrorMessage = function(erreur) {
-		      swal("Ouf!!!", erreur, "info");
-		    };
+  		      swal("Ouf!!!", erreur, "info");
+  		    };
 
-		    const showSuccessMessage = function(message) {
-		      swal("Succès!!!", message, "success");
-		    };
+  		    const showSuccessMessage = function(message) {
+  		      swal("Succès!!!", message, "success");
+  		    };
 
+
+        
+          function load_country_data(page)
+          {
+            $.ajax({
+             url:"<?php echo base_url(); ?>admin/pagination_view_site",
+             method:"GET",
+              beforeSend:function()
+              {
+                $('#country_table').html('<div class="col-md-12 post_data"><p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p><p><span class="content-placeholder" style="width:100%; height: 100px;">&nbsp;</span></p></div>');
+              },
+             success:function(data)
+             {
+              $('#country_table').html(data);
+              
+             }
+            });
+          }
+
+        
+         function load_data(query)
+         {
+            $.ajax({
+             url:"<?php echo base_url(); ?>admin/fetch_search_view_site",
+             method:"POST",
+             data:{query:query},
+              beforeSend:function()
+              {
+                $('#country_table').html('<div class="col-md-12 post_data"><p><span class="content-placeholder" style="width:100%; height: 30px;">&nbsp;</span></p><p><span class="content-placeholder" style="width:100%; height: 100px;">&nbsp;</span></p></div>');
+              },
+             success:function(data){
+              $('#country_table').html(data);
+             }
+            })
+         }
+
+         $('#search_text').keyup(function(){
+          var search = $(this).val();
+          if(search != '')
+          {
+           load_data(search);
+          }
+          else
+          {
+            load_country_data(1);
+          }
+         });
+
+         load_country_data(1);
+
+             
+          
 
 
      });  

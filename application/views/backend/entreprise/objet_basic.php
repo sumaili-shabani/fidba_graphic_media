@@ -192,7 +192,7 @@
 	        	<div class="form-group">
 	        		<input type="hidden" name="operation" id="operation" value="Add" />
 
-	        		<input type="submit" name="action" id="action" class="btn btn-secondary btn-round pull-right" value="modifier" />
+	        		<input type="submit" name="action" id="action" class="btn btn-primary btn-round pull-right" value="modifier" />
 	        	</div>
 	        </div>
 			

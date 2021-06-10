@@ -1,5 +1,5 @@
   <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="javascript:void(0);">
@@ -36,9 +36,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Applications:</h6>
                         <a class="collapse-item" href="<?php echo(base_url()) ?>admin/category">Catégorie</a>
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/approvisionnement">Approvisionnement</a>
+                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/article">Média Article</a>
 
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/galery">Galerie description</a>
+                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/publicite">Publicité</a>
                         
                     </div>
                 </div>
@@ -56,12 +56,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Nos opérations:</h6>
 
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/entree">Entrer en stock</a>
+                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/publicity_personnele">Publicité entreprise</a>
 
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/evaluation">Evaluation Stock</a>
-
-                       <div class="dropdown-divider"></div>
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/stat_entree">Evaluation de stock</a>
+                       
                         
 
                     </div>
@@ -73,7 +70,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Comptabilité
+                Les statistiques
             </div>
 
             
@@ -82,15 +79,15 @@
              <li class="nav-item">
                 <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUtilities2"
                     aria-expanded="true" aria-controls="collapseUtilities2">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>Gestion de paiement</span>
+                    <i class="fas fa-fw fa-pie-chart"></i>
+                    <span>Chartes graphiques</span>
                 </a>
                 <div id="collapseUtilities2" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Paiement galerie:</h6>
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/compte">Nos paiements</a>
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/stat_paiement">Statistique sur paiement</a>
+                        <h6 class="collapse-header">Statistique sur:</h6>
+                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/stat_pub">publication d'article</a>
+                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/stat_users">Utilisateurs actifs</a>
                        
                     </div>
                 </div>
@@ -116,7 +113,7 @@
                         <a class="collapse-item" href="<?php echo(base_url()) ?>admin/role">Fonction et privilège</a>
 
                         <a class="collapse-item" href="<?php echo(base_url()) ?>admin/users">Liste des Utilisateurs</a>
-                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/stat_users">Stat sur Utilisateur</a>
+                       
                         
                         <div class="dropdown-divider"></div>
                         <a class="collapse-item" href="<?php echo(base_url()) ?>admin/contact_info">Contact pour info</a>

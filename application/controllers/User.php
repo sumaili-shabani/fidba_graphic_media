@@ -9,13 +9,13 @@ class user extends CI_Controller
 	public function __construct()
 	{
 	 	  parent::__construct();
-		  // if(!$this->session->userdata('id'))
-		  // {
-		  //     	redirect(base_url().'login');
-		  // }
+		  if(!$this->session->userdata('id'))
+		  {
+		      	redirect(base_url().'login');
+		  }
 		  $this->load->library('form_validation');
-		  $this->load->library('encrypt');
-	      $this->load->library('pdf');
+		  $this->load->library('encryption');
+	      // $this->load->library('pdf');
 		  $this->load->model('crud_model'); 
 
 		  $this->load->helper('url');

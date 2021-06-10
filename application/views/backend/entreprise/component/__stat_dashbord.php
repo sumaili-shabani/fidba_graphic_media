@@ -14,12 +14,13 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Nombre Total des clients</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_client); ?></div>
+                                    Nombre Total des articles actifs</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_publicite); ?></div>
                             </div>
                             <div class="col-auto">
-                                <a href="<?php echo(base_url()) ?>admin/users">
-                                    <i class="fas fa-home fa-2x text-gray-300"></i>
+                                <a href="javascript:void(0);">
+                                    
+                                    <i class="fas fa-pie-chart fa-2x text-gray-300"></i>
                                 </a>
                             </div>
                         </div>
@@ -34,19 +35,20 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Nombre des paiements </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_paiement); ?></div>
+                                    Nombre total de catégorie(rubrique) d'article</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_category); ?></div>
                             </div>
                             <div class="col-auto">
-                                <a href="<?php echo(base_url()) ?>admin/compte">
-                                    
-                                    <i class="fas fa-dollar fa-2x text-gray-300"></i>
+                                <a href="javascript:void(0);">
+                                    <i class="fas fa-line-chart fa-2x text-gray-300"></i>
                                 </a>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Tasks Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -54,7 +56,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre des membres
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre des membres qui ont les privilège au système
                                 </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
@@ -68,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <a href="<?php echo(base_url()) ?>admin/users">
+                                <a href="javascript:void(0);">
                                     
                                     <i class="fas fa-university fa-2x text-gray-300"></i>
                                 </a>
@@ -90,7 +92,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_users); ?></div>
                             </div>
                             <div class="col-auto">
-                                <a href="<?php echo(base_url()) ?>admin/users">
+                                <a href="javascript:void(0);">
                                     
                                     <i class="fas fa-group fa-2x text-gray-300"></i>
                                 </a>
@@ -169,7 +171,7 @@
 
 				<div class="col-md-6">
 				  <div class="card">
-				    <div class="card-header text-white bg-secondary">
+				    <div class="card-header text-white bg-primary">
 				      Statistique de paiement par raport au genre de sexe
 				    </div>
 				    <div class="card-body">

@@ -27,6 +27,14 @@
 <!--/ calender javascripts -->
 <!-- fin -->
 <script src="<?= base_url('js/plugins/summernote/summernote-bs4.min.js')?>"></script>
+
+<!-- auto complete search box -->
+<script src="<?= base_url('js/bootstrap3-typeahead.min.js')?>"></script>
+<script src="<?= base_url('js/handlebars.js')?>"></script>
+<script src="<?= base_url('js/typeahead.bundle.js')?>"></script>
+<!-- fin -->
+
+
 <script>
   $(function () {
     // Summernote

@@ -77,7 +77,7 @@
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button">
+                                <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -102,7 +102,7 @@
                                             placeholder="Search for..." aria-label="Search"
                                             aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-secondary" type="button">
+                                            <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
                                             </button>
                                         </div>
@@ -122,7 +122,7 @@
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header bg-secondary">
+                                <h6 class="dropdown-header bg-primary">
                                     Mes notifications
                                 </h6>
 
@@ -143,7 +143,7 @@
 
                                         <a class="dropdown-item d-flex align-items-center" href="<?php echo(base_url()) ?><?php echo($not['url']) ?>">
                                             <div class="mr-3">
-                                                <div class="icon-circle bg-secondary">
+                                                <div class="icon-circle bg-primary">
                                                     <i class="<?php echo($not["icone"]) ?> text-white"></i>
                                                 </div>
                                             </div>
@@ -195,6 +195,10 @@
                                 <a class="dropdown-item" href="<?php echo(base_url())?>admin/notification">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Mes Activités
+                                </a>
+                                <a class="dropdown-item" href="<?php echo(base_url())?>">
+                                    <i class="fas fa-globe fa-sm fa-fw mr-2 text-gray-400"></i>
+                                   Vister le site
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" onclick="return confirm('êtes-vous sûre de vouloire se deconnecter?');" href="<?php echo(base_url())?>login/logout">

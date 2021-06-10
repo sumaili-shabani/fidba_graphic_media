@@ -1,10 +1,58 @@
+<?php 
+$icone_info;
+$tel1_info;
+$tel2_info ;
+$adresse_info ;
+$facebook_info ;
+$twitter_info;
+$linkedin_info;
+$email_info ;
+$termes_info;
+$confidentialite_info ;
+$description_info;
+$mission_info;
+$objectif_info;
+$blog_info;
+$nom_site_info;
+
+if ($contact_info_site->num_rows() > 0) {
+  foreach ($contact_info_site->result_array() as $key) {
+    $nom_site_info = $key['nom_site'];
+    $icone_info = base_url().'upload/tbl_info/'.$key['icone'];
+    $tel1_info = $key['tel1'];
+    $tel2_info = $key['tel2'];
+    $adresse_info = $key['adresse'];
+    $facebook_info = $key['facebook'];
+    $twitter_info = $key['twitter'];
+    $linkedin_info = $key['linkedin'];
+    $email_info = $key['email'];
+    $termes_info = $key['termes'];
+    $confidentialite_info = $key['confidentialite'];
+    $description_info = $key['description'];
+    $mission_info = $key['mission'];
+    $objectif_info = $key['objectif'];
+    $blog_info = $key['blog'];
+
+  }
+
+}
+
+
+ ?>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="Boutique">
+<meta name="description" content="<?= $description_info ?>">
+<meta name="keywords" content="<?= $description_info ?>">
+<meta name="author" content="Ets yetu">
 
-<title><?php echo($title) ?></title>
+<title><?php echo($title) ?> | <?= $nom_site_info ?></title>
+<!-- Fav Icon  -->
+<link rel="shortcut icon" href="<?php echo($icone_info) ?>">
+<!-- Page Title  -->
+
+
 
 <!-- Custom fonts for this template-->
 <link href="<?php echo(base_url())?>js/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -17,8 +65,7 @@
 
 <!-- Custom styles for this page -->
 <link href="<?php echo(base_url())?>js/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<!-- Fav Icon  -->
-<link rel="shortcut icon" href="<?php echo(base_url()) ?>upload/annumation/logo.jpg">
+
 
 <!-- font awason icon -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('js/assets/font-awesome/css/font-awesome.css')?>">

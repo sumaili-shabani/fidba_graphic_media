@@ -63,7 +63,7 @@
 	        },
 	        data: [
 		        {
-		            type: "column",
+		            type: "pie",
 		            showInLegend: true,
 	                legendText: "{indexLabel}",                
 		            dataPoints: [<?php echo $chart_data2; ?>]

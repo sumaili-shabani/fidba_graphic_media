@@ -14,12 +14,13 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Nombre Total des clients</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_client); ?></div>
+                                    Nombre Total des articles actifs</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_publicite); ?></div>
                             </div>
                             <div class="col-auto">
-                                <a href="<?php echo(base_url()) ?>admin/users">
-                                    <i class="fas fa-home fa-2x text-gray-300"></i>
+                                <a href="<?php echo(base_url()) ?>admin/article">
+                                    
+                                    <i class="fas fa-pie-chart fa-2x text-gray-300"></i>
                                 </a>
                             </div>
                         </div>
@@ -34,19 +35,20 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Nombre des paiements </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_paiement); ?></div>
+                                    Nombre total de catégorie(rubrique) d'article</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo($nombre_category); ?></div>
                             </div>
                             <div class="col-auto">
-                                <a href="<?php echo(base_url()) ?>admin/compte">
-                                    
-                                    <i class="fas fa-dollar fa-2x text-gray-300"></i>
+                                <a href="<?php echo(base_url()) ?>admin/category">
+                                    <i class="fas fa-line-chart fa-2x text-gray-300"></i>
                                 </a>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Tasks Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -54,7 +56,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre des membres
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre des membres qui ont les privilège au système
                                 </div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
@@ -137,16 +139,17 @@
 
 						$chart_data2 = '';
 						$chart_data3 = '';
+                        $label = '';
 
-						$detail2 = $this->db->query("SELECT COUNT(motif) AS nombre, motif,(SELECT SUM(montant)) as total,date_paie FROM profile_paiement GROUP BY date_paie");
+						$detail2 = $this->db->query("SELECT COUNT(nom_cat) AS nombre, nom_cat FROM profile_article GROUP BY nom_cat");
 						if ($detail2->num_rows() > 0) {
 						    foreach ($detail2->result_array() as $key) {
 
-							      	$libelle = $key["date_paie"];
+                                    $label = $key["nombre"]." publication(s) ".$key["nom_cat"];
 
-							        $chart_data2 .= "{ indexLabel:'".$libelle."', y:".$key["total"]."}, ";
+                                    $chart_data2 .= "{ indexLabel:'".$label."', y:".$key["nombre"]."}, ";
 
-							        $chart_data3 .= "{ indexLabel:'".$libelle."', y:".$key["total"]."}, ";
+							        $chart_data3 .= "{ indexLabel:'".$label."', y:".$key["nombre"]."}, ";
 
 							         
 							}
@@ -167,8 +170,8 @@
 				<div class="col-md-6">
 
 					 <div class="card">
-					    <div class="card-header bg-secondary text-white">
-					      Statistique de paiement par raport aux differentes dates
+					    <div class="card-header bg-primary text-white">
+					      Statistiques des publications par rapport à leurs catégories
 					    </div>
 					    <div class="card-body">
 					      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
@@ -178,7 +181,7 @@
 
 				<div class="col-md-6">
 				  <div class="card">
-				    <div class="card-header bg-secondary text-white">
+				    <div class="card-header bg-primary text-white">
 				      Statistique de paiement par raport au genre de sexe
 				    </div>
 				    <div class="card-body">

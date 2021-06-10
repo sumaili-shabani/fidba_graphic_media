@@ -33,7 +33,7 @@
                              <div class="col-md-12">
 		                         <div class="row">
 		                           <div class="col-md-12">
-		                             <button class="btn btn-dim btn-sm btn-outline-secondary pull-right  mb-4" id="add_button" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus"></i>Effectuer l'opération</button>
+		                             <button class="btn btn-dim btn-sm btn-outline-primary pull-right  mb-4" id="add_button" data-toggle="modal" data-target="#userModal"><i class="fa fa-plus"></i>Effectuer l'opération</button>
 		                           </div>
 		                         </div>
 		                      </div>
@@ -94,8 +94,8 @@
       <div class="modal-dialog">
         <form method="post" id="user_form" enctype="multipart/form-data">
           <div class="modal-content">
-            <div class="modal-header bg-secondary text-white">
-              <p class="modal-title text-center">role</p>
+            <div class="modal-header bg-primary text-white">
+              <p class="modal-title text-center">cat</p>
               <button type="button" class="close text-danger" data-dismiss="modal"><i class="fa fa-close"></i></button>
             </div>
             <div class="modal-body">
@@ -103,7 +103,7 @@
 
                 <div class="form-group col-md-12">
                      <label> <i class="fa fa-globe"></i> Entrer le nom d'une catégorie</label>
-                     <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrez le nom de la catégorie des produits" />
+                     <input type="text" name="nom" id="nom" class="form-control" placeholder="Entrez la catégorie d'informations" />
                 </div>
 
                     
@@ -112,7 +112,7 @@
             <div class="modal-footer">
               <input type="hidden" name="idcat" id="idcat" />
               <input type="hidden" name="operation" id="operation" />
-              <input type="submit" name="action" id="action" class="btn btn-secondary" value="Add" />
+              <input type="submit" name="action" id="action" class="btn btn-primary" value="Add" />
               <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Fermer</button>
             </div>
           </div>
