@@ -58,7 +58,7 @@
           <div class="modal-dialog">
             <form method="post" id="user_form" enctype="multipart/form-data">
               <div class="modal-content">
-                <div class="modal-header bg-dark text-white">
+                <div class="modal-header bg-primary text-white">
                   <span class="modal-title">Add User</span>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
@@ -103,7 +103,7 @@
         <div class="modal fade" id="userModal3">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
-                    <div class="modal-header bg-dark text-white">
+                    <div class="modal-header bg-primary text-white">
                        <div class="modal-title">information personnele aux termes de contrat</div> 
                     </div>
                     
@@ -143,7 +143,7 @@
                     </div>
                     <div class="modal-footer bg-light">
 
-                        <button type="submit" class="btn btn-dark" name="valider" id="envoyer_message">
+                        <button type="submit" class="btn btn-primary" name="valider" id="envoyer_message">
                             <i class="fa fa-send"></i> Envoyer
                         </button>
                         <a href="javascript:void(0);" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> fermer</a>

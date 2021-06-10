@@ -1810,7 +1810,7 @@ class admin extends CI_Controller
 
             $sub_array[] = $etat; 
 
-            $sub_array[] = '<button type="button" name="delete" idcontact="'.$row->id.'" class="btn btn-dark btn-circle btn-sm update"><i class="fa fa-comment-o"></i></button>'; 
+            $sub_array[] = '<button type="button" name="delete" idcontact="'.$row->id.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-comment-o"></i></button>'; 
 
             $sub_array[] = '<button type="button" name="delete" idcontact="'.$row->id.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button>';  
             $data[] = $sub_array;  
@@ -2284,7 +2284,7 @@ class admin extends CI_Controller
                 }
 
                 if ($row->etat == 1) {
-                  $etat = '<a href="javascript:void(0);" type="button" name="pdf" idp="'.$row->idp.'" class="btn btn-success btn-sm desactiver"><i class="fa fa-check"></i> Activé</a>';
+                  $etat = '<a href="javascript:void(0);" type="button" name="pdf" idp="'.$row->idp.'" class="btn btn-primary btn-sm desactiver"><i class="fa fa-check"></i> Activé</a>';
                 }
                 else{
 

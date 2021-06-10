@@ -40,7 +40,7 @@
     		</div>
     		<div class="col-md-12" style="margin-top: 5px;">
 
-        		<input type="submit" name="action" id="action" class="btn btn-secondary btn-round btn-block" value="modifier la photo" />
+        		<input type="submit" name="action" id="action" class="btn btn-primary btn-round btn-block" value="modifier la photo" />
     		</div>
     	</div>
 

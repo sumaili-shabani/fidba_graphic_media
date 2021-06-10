@@ -109,6 +109,7 @@ class entreprise extends CI_Controller
 
     function notification($param1=''){
       $data['title']    ="Listes des formations";
+      $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
       $data['users']    = $this->crud_model->fetch_connected($this->connected);
       $this->load->view('backend/entreprise/notification', $data);
     }

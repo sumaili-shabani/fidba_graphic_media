@@ -8,7 +8,7 @@
       <tr>
         <th width="10%">
             <div class="form-group" >
-                <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-circle select_all" id="#select_all" data-toggle="modal" data-target="#userModal3"><i class="fa fa-send"></i></a>
+                <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-circle select_all" id="#select_all" data-toggle="modal" data-target="#userModal3"><i class="fa fa-send"></i></a>
             </div>
         </th>
         <th width="15%">Nom</th>
@@ -28,7 +28,7 @@
       <tr>
         <th width="10%">
             <div class="form-group" >
-                <a href="javascript:void(0)" class="btn btn-dark btn-sm btn-circle select_all" id="#select_all" data-toggle="modal" data-target="#userModal3"><i class="fa fa-send"></i></a>
+                <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-circle select_all" id="#select_all" data-toggle="modal" data-target="#userModal3"><i class="fa fa-send"></i></a>
             </div>
         </th>
         <th width="15%">Nom</th>
