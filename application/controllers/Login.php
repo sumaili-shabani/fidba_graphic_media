@@ -13,21 +13,98 @@ class login extends CI_Controller
 
 
 	public function index(){
-		$data["title"] = "Connexion au système Gestion galerie nord kivu";  
+		$data["title"] = "Connexion au système Gestion galerie nord kivu"; 
+
+
 		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
-		$this->load->view('login', $data);
-		// $this->load->view('panel', $data);
+		$data['populars']  	= $this->crud_model->Select_popular_menu();
+		$data['padding_articles']  	= $this->crud_model->Select_padding_articles_tri();
+
+
+		$data['categories']  	= $this->crud_model->Select_category_menu();
+		$data['categories2']  	= $this->crud_model->Select_category();
+
+		$data['rand7']  		= $this->crud_model->Select_article_7_cool();
+		$data['carousels_one']  = $this->crud_model->Select_article_carousel_cool();
+		$data['ones'] 			= $this->crud_model->Select_article_carousel_one();
+
+		$data['articles_recents'] = $this->crud_model->Select_articles_recents();
+
+		$data['article_interview']  = $this->crud_model->Select_article_intervieux_cool();
+
+		$data['article_blog_one']  = $this->crud_model->Select_article_by_cat();
+
+		$data['article_publicite']  = $this->crud_model->Select_article_publicite();
+
+		
+		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site();
+
+		$data['pub_publicite']  = $this->crud_model->Select_galery_publicite();
+		$data['pub_publicite3']  = $this->crud_model->Select_galery_publicite_lm3();
+
+
+
+		$this->load->view('frontend/login', $data);
+
 	}
 	public function register(){
 		$data["title"] = "Devenez de à présent membre au système "; 
-		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site();  
-		$this->load->view('register', $data);
+		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+		$data['populars']  	= $this->crud_model->Select_popular_menu();
+		$data['padding_articles']  	= $this->crud_model->Select_padding_articles_tri();
+
+
+		$data['categories']  	= $this->crud_model->Select_category_menu();
+		$data['categories2']  	= $this->crud_model->Select_category();
+
+		$data['rand7']  		= $this->crud_model->Select_article_7_cool();
+		$data['carousels_one']  = $this->crud_model->Select_article_carousel_cool();
+		$data['ones'] 			= $this->crud_model->Select_article_carousel_one();
+
+		$data['articles_recents'] = $this->crud_model->Select_articles_recents();
+
+		$data['article_interview']  = $this->crud_model->Select_article_intervieux_cool();
+
+		$data['article_blog_one']  = $this->crud_model->Select_article_by_cat();
+
+		$data['article_publicite']  = $this->crud_model->Select_article_publicite();
+
+		
+		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site();
+
+		$data['pub_publicite']  = $this->crud_model->Select_galery_publicite();
+		$data['pub_publicite3']  = $this->crud_model->Select_galery_publicite_lm3(); 
+		$this->load->view('frontend/login', $data);
 	}
 	public function forgot(){
 		$data["title"] = "Avez-vous oublié votre mot de passe au 
 		système Gestion galerie nord kivu professionnel";  
 		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
-		$this->load->view('forgot', $data);
+		$data['populars']  	= $this->crud_model->Select_popular_menu();
+		$data['padding_articles']  	= $this->crud_model->Select_padding_articles_tri();
+
+
+		$data['categories']  	= $this->crud_model->Select_category_menu();
+		$data['categories2']  	= $this->crud_model->Select_category();
+
+		$data['rand7']  		= $this->crud_model->Select_article_7_cool();
+		$data['carousels_one']  = $this->crud_model->Select_article_carousel_cool();
+		$data['ones'] 			= $this->crud_model->Select_article_carousel_one();
+
+		$data['articles_recents'] = $this->crud_model->Select_articles_recents();
+
+		$data['article_interview']  = $this->crud_model->Select_article_intervieux_cool();
+
+		$data['article_blog_one']  = $this->crud_model->Select_article_by_cat();
+
+		$data['article_publicite']  = $this->crud_model->Select_article_publicite();
+
+		
+		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site();
+
+		$data['pub_publicite']  = $this->crud_model->Select_galery_publicite();
+		$data['pub_publicite3']  = $this->crud_model->Select_galery_publicite_lm3(); 
+		$this->load->view('frontend/forgot', $data);
 	}
 	public function accueil(){
 		echo("bonjour dans le codeigner");
@@ -253,6 +330,31 @@ class login extends CI_Controller
     {
         $data['title'] = "recupération de mot de passe";
         $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+		$data['populars']  	= $this->crud_model->Select_popular_menu();
+		$data['padding_articles']  	= $this->crud_model->Select_padding_articles_tri();
+
+
+		$data['categories']  	= $this->crud_model->Select_category_menu();
+		$data['categories2']  	= $this->crud_model->Select_category();
+
+		$data['rand7']  		= $this->crud_model->Select_article_7_cool();
+		$data['carousels_one']  = $this->crud_model->Select_article_carousel_cool();
+		$data['ones'] 			= $this->crud_model->Select_article_carousel_one();
+
+		$data['articles_recents'] = $this->crud_model->Select_articles_recents();
+
+		$data['article_interview']  = $this->crud_model->Select_article_intervieux_cool();
+
+		$data['article_blog_one']  = $this->crud_model->Select_article_by_cat();
+
+		$data['article_publicite']  = $this->crud_model->Select_article_publicite();
+
+		
+		$data['contact_info_site']  = $this->crud_model->Select_contact_info_site();
+
+		$data['pub_publicite']  = $this->crud_model->Select_galery_publicite();
+		$data['pub_publicite3']  = $this->crud_model->Select_galery_publicite_lm3(); 
+
         $data['verification_key'] = $param1;
         $req = $this->db->where('verification_key', $param1);
         $req = $this->db->get('recupere');
@@ -265,7 +367,7 @@ class login extends CI_Controller
 
         }
 
-        $this->load->view('secure', $data);
+        $this->load->view('frontend/secure', $data);
     }
 
 

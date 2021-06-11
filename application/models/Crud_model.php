@@ -2922,7 +2922,279 @@ class crud_model extends CI_Model{
          $this->db->where("idg", $idg);  
          $query=$this->db->get('galery2');  
          return $query->result();  
-    } 
+    }
+
+
+    /**
+    *
+    * les script pour la page de menu default
+    les indo à la lune
+    *============================================================================
+    ==============================================================================
+
+    */
+
+    function Select_popular_menu()
+    {
+       
+        return $this->db->query('SELECT * FROM profile_vue ORDER BY RAND() LIMIT 5');
+    }
+
+    function Select_padding_articles_tri()
+    {
+        return $this->db->query('SELECT * FROM profile_publicite  ORDER BY RAND() LIMIT 6 ');
+    }
+
+    function Select_category_menu()
+    {
+        $this->db->order_by('nom','ASC');
+        $this->db->limit(6);
+        return $this->db->get('category');
+    }
+
+    function Select_article_7_cool()
+    {
+        return $this->db->query('SELECT * FROM profile_article   ORDER BY RAND() LIMIT 7');
+    }
+
+    function Select_article_carousel_cool()
+    {
+        return $this->db->query('SELECT * FROM profile_article   ORDER BY RAND() LIMIT 3');
+    }
+
+    function Select_article_carousel_one()
+    {
+        return $this->db->query('SELECT * FROM profile_article   ORDER BY RAND() LIMIT 1');
+    }
+
+    function Select_articles_recents()
+    {
+        return $this->db->query('SELECT * FROM profile_article   ORDER BY created_at DESC LIMIT 10');
+    }
+
+    function Select_article_intervieux_cool()
+    {
+        return $this->db->query('SELECT * FROM profile_article   ORDER BY RAND() LIMIT 3');
+    }
+
+    function Select_article_by_cat()
+    {
+        return $this->db->query('SELECT * FROM profile_article  GROUP BY idcat LIMIT 7 ');
+    }
+
+    function Select_article_publicite()
+    {
+        return $this->db->query('SELECT * FROM profile_publicite  LIMIT 10');
+    }
+
+    function Select_galery_publicite()
+    {
+        return $this->db->query('SELECT * FROM galery2 ORDER BY created_at DESC LIMIT 10');
+    }
+
+    function Select_galery_publicite_lm3()
+    {
+        return $this->db->query('SELECT * FROM galery2 ORDER BY created_at DESC LIMIT 4');
+    }
+
+    function fetch_pagination_articles()
+    {
+      $this->db->limit(50);
+      $this->db->order_by('created_at', 'DESC');
+      $query = $this->db->query("SELECT * FROM profile_article");
+      return $query->num_rows();
+    }
+
+    // auto complete text roffres d'emplois
+   function fetch_data_auto_articles($query)
+   {
+
+      $this->db->like('nom', $query);
+      $this->db->or_like('description', $query);
+      $this->db->or_like('nom_cat', $query);
+      
+      $query = $this->db->get('profile_article');
+      if($query->num_rows() > 0)
+      {
+         foreach($query->result_array() as $row)
+         {
+          $output[] = array(
+           'name'  => $row["nom"],
+           'image'  => $row["image"]
+          );
+         }
+       echo json_encode($output);
+      }
+   }
+
+   // recherche de articles
+   function fetch_data_search_articles($query)
+   {
+    $this->db->select("*");
+    $this->db->from("profile_article");
+    $this->db->limit(8);
+    if($query != '')
+    {
+     $this->db->like('nom', $query);
+     $this->db->or_like('description', $query);
+
+    }
+    $this->db->order_by('nom', 'ASC');
+    return $this->db->get();
+   }
+   function get_name_article_pub($idart){
+      $this->db->where("idart", $idart);
+      $nom = $this->db->get("profile_article")->result_array();
+      foreach ($nom as $key) {
+        $titre = $key["nom"];
+        return $titre ;
+      }
+
+  }
+
+   function Select_our_articles_tag($idart)
+  {   
+      $this->db->limit(1);
+      return $this->db->get_where("profile_article", array(
+        'idart' =>  $idart
+      ));
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // detail des articles par formations
+   function fetch_details_pagination_articles($limit, $start)
+   {
+    $output = '';
+    $this->db->select("*");
+    $this->db->from("profile_article");
+    $this->db->order_by("created_at", "DESC");
+    $this->db->limit($limit, $start);
+    $query = $this->db->get();
+
+
+
+    foreach($query->result() as $key)
+    {
+
+
+      $vues  =  $this->db->query("SELECT COUNT(idart) AS total FROM vues WHERE idart=".$key->idart." ");
+      if ($vues->num_rows() <=0) {
+        $nombre_vue = 0;
+      }
+      else{
+        foreach ($vues->result_array() as $key_vue) {
+          $nombre_vue = $key_vue['total'];
+        }
+      }
+
+     $output .= '
+      <div class="col-sm-6 p-r-25 p-r-15-sr991">
+        <!-- Item latest -->
+        <div class="m-b-45">
+          <a href="'.base_url().'home/article/'.$key->idart.'" class="wrap-pic-w hov1 trans-03">
+            <img src="'.base_url().'upload/article/'.$key->image.'" alt="IMG" style="height: 200px;">
+          </a>
+          <div class="p-t-16">
+            <h5 class="p-b-5">
+              <a href="'.base_url().'home/article/'.$key->idart.'" class="f1-m-3 cl2 hov-cl10 trans-03">
+                '.nl2br(substr($key->nom, 0,100)).'...
+              </a>
+            </h5>
+            <span class="cl8">
+             
+              <span class="f1-s-3 m-rl-3">
+                <i class="fa fa-eye"></i>  '.$nombre_vue.' vue(s) &nbsp;&nbsp; - &nbsp;&nbsp;
+              </span>
+              <span class="f1-s-3">
+                '.nl2br(substr(date(DATE_RFC822, strtotime($key->created_at)), 0, 23)).'
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      
+     ';
+    }
+    
+    return $output;
+   }
+
+    // insertion des vues 
+    function insert_vues_ip($data)  
+    {  
+       $this->db->insert('vues', $data);  
+    }
+
+    function Select_articles_recents_datail()
+    {
+        return $this->db->query('SELECT * FROM profile_article   ORDER BY created_at DESC LIMIT 4');
+    }
+
+    function Select_idart_tag_insert($idart, $machine)
+    {   
+        $this->db->limit(1);
+        return $this->db->get_where("vues", array(
+          'idart'   =>  $idart,
+          'machine' =>  $machine
+        ));
+    }
+
+     function Select_our_article_tag($idcat)
+    {   
+        $this->db->limit(12);
+        $this->db->order_by('created_at','DESC');
+        return $this->db->get_where("profile_article", array(
+          'idcat' =>  $idcat
+        ));
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
