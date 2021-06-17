@@ -54,6 +54,16 @@
                    <img src="<?= $icone_info ?>" alt="IMG-LOGO" style="height: 100px; max-height: 150%;">
                 </a>
             </div>
+
+
+            
+
+            <!-- Button show menu -->
+            <div class="btn-show-menu-mobile hamburger hamburger--squeeze m-r--8">
+                <span class="hamburger-box">
+                    <i class="fa fa-search fa-lg" style="font-size: 35px; color: black;"></i>
+                </span>
+            </div>
             <!-- Button show menu -->
             <div class="btn-show-menu-mobile hamburger hamburger--squeeze m-r--8">
                 <span class="hamburger-box">
@@ -61,6 +71,8 @@
                 </span>
             </div>
         </div>
+
+
         <!-- Menu Mobile -->
         <div class="menu-mobile">
             <ul class="topbar-mobile">
@@ -73,6 +85,19 @@
                             alt="IMG" style="height: 15px;"> -->
                        
                     </span>
+                </li>
+                <li class="col-md-12 col-xl-12 col-sm-12 col-lg-12">
+                    <!-- Button show menu -->
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="row">
+                                
+                                <div class="col-md-12" id="prefetch2">
+                                    <input type="search" name="search" class="form-control-lg typeahead search_text" id="inlineFormInputGroupUsername2" placeholder="Rechecher un article...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="left-topbar">
                     <a href="<?php echo(base_url()) ?>home/about" class="left-topbar-item">
@@ -270,6 +295,9 @@
                        <img src="<?= $icone_info ?>" alt="LOGO">
                     </a>
                     <ul class="main-menu">
+
+                         
+
                         <li>
                             <a href="<?php echo(base_url()) ?>">Accueil</a>
                         </li>
@@ -310,7 +338,9 @@
                         <li class="main-menu">
                             <a href="#">Autres</a>
                             <ul class="sub-menu">
-                                
+
+                               
+                                <li><a href="javascript:void(0);" class="show_zone_recherche">Effectuer une recherche</a>
                                 <li><a href="<?php echo(base_url()) ?>home/about">Apropos</a>
                                 </li>
                                 <li><a href="<?php echo(base_url()) ?>home/contact">Contact</a>
@@ -450,25 +480,34 @@
                             </ul>
                         </li>
                     </ul>
+
+
                 </nav>
+
+                
             </div>
         </div>
     </div>
 </header>
 
-<!-- bande de recherche -->
-<!-- <div class="container">
+<!-- recherche pour information -->
+<div class="menu-desktop zone_recherche" style="margin-top: 10px; margin-bottom: 50px;">
 
-    <div class="col-md-12 mb-2" style="margin-top: 10px;">
-        <div class="row">
-            <div class="col-md-12">
-
-               <input type="search" name="recherche" class="form-control" placeholder="recheche une information sur ...." >
-
+    <div class="col-md-12 card mb-2">
+        <div class="col-md-12 card-body">
+            <div class="row">
+                
+                <div class="col-md-12 form-group" id="prefetch2">
+                    <input type="search" name="search" class="form-control typeahead search_text" id="inlineFormInputGroupUsername2" placeholder="Rechecher un article..." style="width: 1000px; margin-top: 15px; border-color: black; margin-bottom: 3px;" >
+                </div>
+                
             </div>
-            
         </div>
     </div>
     
-</div> -->
+</div>
+<!-- fin recherche -->
+
+<!-- bande de recherche -->
+
 <!-- fin -->

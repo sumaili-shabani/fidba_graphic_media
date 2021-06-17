@@ -76,7 +76,7 @@ if ($contact_info_site->num_rows() > 0) {
 <!-- sweetalert -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('js/sweetalert/sweetalert.css')?>">
 
-<link rel="stylesheet" href="https://twitter.github.io/typeahead.js/css/examples.css" /> 
+<!-- <link rel="stylesheet" href="https://twitter.github.io/typeahead.js/css/examples.css" />  -->
 
 
 <style>

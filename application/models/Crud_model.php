@@ -3051,6 +3051,29 @@ class crud_model extends CI_Model{
       }
    }
 
+   // auto complete text offres d'emplois automatique
+   function recherche_data_auto_articles($query)
+   {
+
+      $this->db->like('nom', $query);
+      $this->db->or_like('description', $query);
+      $this->db->or_like('nom_cat', $query);
+      
+      $query = $this->db->get('profile_article');
+      if($query->num_rows() > 0)
+      {
+         foreach($query->result_array() as $row)
+         {
+          $output[] = array(
+           'idart'  => $row["idart"],
+           'name'  => $row["nom"],
+           'image'  => $row["image"]
+          );
+         }
+       echo json_encode($output);
+      }
+   }
+
    // recherche de articles
    function fetch_data_search_articles($query)
    {

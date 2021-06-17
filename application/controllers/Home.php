@@ -26,6 +26,11 @@ class home extends CI_Controller
 
 		}
 
+		function test(){
+			echo("chargement...");
+			redirect('home','refresh');
+		}
+
 
 		function index(){
 			$data['title']			= "L'acccueil vous soit doux";
@@ -382,6 +387,12 @@ class home extends CI_Controller
 	function fetch_auto_offres_articles()
 	{
 	    echo $this->crud_model->fetch_data_auto_articles($this->uri->segment(3));
+	}
+
+	// auto complete text roffres d'emplois
+	function search_auto_offres_articles()
+	{
+	    echo $this->crud_model->recherche_data_auto_articles($this->uri->segment(3));
 	}
 
 	// insertion de vues 

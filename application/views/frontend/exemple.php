@@ -138,13 +138,16 @@
            source:sample_data,
            limit:10,
            templates:{
-            suggestion:Handlebars.compile('<div class="row"><div class="col-md-2" style="padding-right:5px; padding-left:5px;"><img src="<?php echo(base_url()) ?>upload/article/{{image}}" class="img-thumbnail" width="48" /></div><div class="col-md-10" style="padding-right:5px; padding-left:5px;">{{name}}</div></div>')
+            suggestion:Handlebars.compile('<div class="col-md-12 card"><div class="row card-body"><div class="col-md-2" style="padding-right:5px; padding-left:5px;"><img src="<?php echo(base_url()) ?>upload/article/{{image}}" class="img-thumbnail" width="68" /></div><div class="col-md-10" style="padding-right:5px; padding-left:5px;">{{name}}</div></div></div>')
            }
           });
         });
         </script>
         
 </body>
+
+
+
 
 <!-- Mirrored from preview.colorlib.com/theme/magnews2/blog-list-02.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 30 Oct 2020 20:02:10 GMT -->
 

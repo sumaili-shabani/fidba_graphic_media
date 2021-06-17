@@ -134,3 +134,6 @@
 
         });
     </script>
+
+
+    <?php include('_recherche.php') ?>
