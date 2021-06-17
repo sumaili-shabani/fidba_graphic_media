@@ -128,6 +128,18 @@ class entreprise extends CI_Controller
       $this->load->view('backend/entreprise/publicity_personnele', $data);  
   }
 
+  function commentaire(){
+    $data['title']="Paramétrage  des commentaire pour les articles";
+      $data['contact_info_site']  = $this->crud_model->Select_contact_info_site(); 
+
+    $data['articles']     = $this->crud_model->Select_articles();
+    $data['categories']   = $this->crud_model->Select_category();
+    $data['articles']   = $this->crud_model->Select_artcle_orders();
+    
+
+    $this->load->view('backend/entreprise/commentaire', $data);  
+  }
+
 	  // script de client
   function fetch_client(){  
 
@@ -951,6 +963,206 @@ class entreprise extends CI_Controller
       echo($output);
     
   }
+
+  
+   /**
+   * commentaires des articles de publications
+   ===============================================
+   *===============================================
+   *
+
+   */
+
+    function operation_commentaire(){
+
+      $insert_data = array(  
+           'etape1'       =>     htmlspecialchars($this->input->post('etape1')),  
+           'etape2'       =>     htmlspecialchars($this->input->post("etape2")),
+           'idart'          =>     $this->input->post("idart")
+        ); 
+
+      $requete=$this->crud_model->insert_commentaire($insert_data);
+      echo("Ajout information avec succès");
+      
+    }
+
+    function modification_commentaire(){
+
+      $updated_data = array(  
+            'etape1'      =>     htmlspecialchars($this->input->post('etape1')),  
+        'etape2'      =>     htmlspecialchars($this->input->post("etape2")),
+        'idart'         =>     $this->input->post("idart")
+        );
+
+      $this->crud_model->update_commentaire($this->input->post("idcomment"), $updated_data);
+
+      echo("modification avec succès");
+    }
+
+    function supression_commentaire(){
+
+        $this->crud_model->delete_commentaire($this->input->post("idcomment"));
+        echo("suppression avec succès");
+      
+    }
+
+    function fetch_single_commentaire()  
+    {  
+         $output = array();  
+         $data = $this->crud_model->fetch_single_commentaire($this->input->post('idcomment'));  
+         foreach($data as $row)  
+         {  
+              $output['etape1'] = $row->etape1;  
+              $output['etape2'] = $row->etape2; 
+              $output['idart']  = $row->idart;
+
+              $output['nom']  = $row->nom;
+
+              $output['description']  = substr(nl2br(html_entity_decode($row->description)), 100) .'...';
+
+              $output['text_description']   ='
+                <textarea class="form-control textarea" name="etape1" id="etape1" >
+                    '.$row->etape1.'
+                </textarea>
+              ';
+
+              $output['text_description2']   ='
+                <textarea class="form-control textarea" name="etape2" id="etape2">
+                    '.$row->etape2.'
+                </textarea>
+              ';
+              
+
+              $output['image']  = $row->image;
+              
+              if($row->image != '')  
+              {  
+                   $output['user_image'] = '<img src="'.base_url().'upload/article/'.$row->image.'" class="img-thumbnail" width="300" height="250" /><input type="hidden" name="hidden_user_image" value="'.$row->image.'" />';  
+              }  
+              else  
+              {  
+                   $output['user_image'] = '<input type="hidden" name="hidden_user_image" value="" />';  
+              }  
+              
+         }  
+         echo json_encode($output);  
+    }
+
+  function pagination_view_commentaire($param1='')
+  {
+    $limit = $param1;
+    if ($limit !='') {
+      $output = $this->crud_model->fetch_details_view_commentaire_limit($limit);
+    }
+    else{
+      $output = $this->crud_model->fetch_details_view_commentaire();
+    }
+    
+    echo($output);
+  }
+
+  function fetch_search_view_commentaire()
+  {
+    $output = '';
+    $query = '';
+    $etat = '';
+    if($this->input->post('query'))
+    {
+     $query = $this->input->post('query');
+    }
+    $data = $this->crud_model->fetch_data_search_view_commentaire($query);
+   $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($data->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($data->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nomcat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idcomment="'.$row->idcomment.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idcomment="'.$row->idcomment.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+
+      echo($output);
+    
+  }
+
+      
+
 
 
 

@@ -26,6 +26,12 @@
 
 
                 <div class="col-md-10 col-lg-4 p-b-80" style="margin-top: 10px;">
+                    <div class="col-md-12 col-lg-12 mb-2">
+
+                        <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0&appId=301499887887474&autoLogAppEvents=1" nonce="E0zC0V8g"></script>
+                        <div class="fb-page" data-href="https://web.facebook.com/fidbagraphics/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://web.facebook.com/fidbagraphics/" class="fb-xfbml-parse-ignore"><a href="https://web.facebook.com/fidbagraphics/">Fidba Graphics</a></blockquote></div>
+                    </div>
                     <?php include('component/_section_pub.php') ?>
                 </div>
                 

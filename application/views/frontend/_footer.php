@@ -24,21 +24,26 @@
                                                 alt="LOGO" style="height: 80px;">
                                         </a>
                                     </div> -->
-                                    <div class="size-h-3 flex-s-c">
+                                    <!-- <div class="size-h-3 flex-s-c">
                                         <h5 class="f1-m-7 cl0">
+                                            &nbsp;
                                             Qui sommes-nous?
                                         </h5>
-                                    </div>
+                                    </div> -->
                                     <div style="margin-top: 10px;">
                                         <p class="f1-s-1 cl11 p-b-16">
                                             <img class="max-s-full mr-2" src="<?php echo(base_url()) ?>upload/tbl_info/<?= $row['icone'] ?>"
                                                 alt="LOGO" style="height: 80px; float: left;">
-                                           <?php echo(nl2br(html_entity_decode(substr($row['description'], 0,300)))) ?>
+                                           <?php echo(nl2br(html_entity_decode(substr($row['description'], 0,320)))) ?>
                                         </p>
                                         <p class="f1-s-1 cl11 p-b-16">
-                                            Avez-vous des questions? Appeler au  
-                                            <a href="tel:<?php echo($row['tel1']) ?>"> <?php echo($row['tel1']) ?></a>  et au 
-                                            <a href="tel:<?php echo($row['tel2']) ?>"> <?php echo($row['tel2']) ?></a>
+                                           <!--  Avez-vous des questions? Appeler au   -->
+                                            <div class="col-md-12">
+                                                <a href="tel:<?php echo($row['tel1']) ?>"> <?php echo($row['tel1']) ?></a>
+                                            </div>   
+                                           <div class="col-md-12">
+                                                <a href="tel:<?php echo($row['tel2']) ?>"> <?php echo($row['tel2']) ?></a>
+                                           </div>
                                         </p>
                                         <div class="p-t-15">
                                             <a target="_blank" href="<?php echo($row['facebook']) ?>" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
@@ -50,9 +55,15 @@
                                             <a target="_blank" href="<?php echo($row['linkedin']) ?>" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
                                                 <span class="fab fa-linkedin"></span>
                                             </a>
+
+                                            <a target="_blank" href="<?php echo($instagram_info) ?>" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
+                                                <span class="fab fa-instagram"></span>
+                                            </a>
                                            
-                                            <a target="_blank" href="javascript:void(0);" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
-                                                <span class="fab fa-youtube"></span>
+                                            <a href="<?php echo($whatsapp_info) ?>" target="_blank"
+                                                class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
+                                                <i class="fab fa-whatsapp m-r-7"></i>
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -72,10 +83,16 @@
 
                 
                 <div class="col-sm-6 col-lg-4 p-b-20">
-                    <div class="size-h-3 flex-s-c">
-                        <h5 class="f1-m-7 cl0">
-                            Nos articles
-                        </h5>
+                    <div class="size-h-3 flex-s-c text-center">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="co-md-6"></div>
+                                <div class="col-md-6" style="text-align: center; padding-right: 10px;">
+                                    <h5 class="f1-m-7 cl0"> Nos articles</h5>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
                     <ul>
 
@@ -131,9 +148,17 @@
                 </div>
                 <div class="col-sm-6 col-lg-4 p-b-20">
                     <div class="size-h-3 flex-s-c">
-                        <h5 class="f1-m-7 cl0">
-                            Catégories d'informations
-                        </h5>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="co-md-6"></div>
+                                <div class="col-md-6" style="text-align: center; padding-right: 10px;">
+                                    <h5 class="f1-m-7 cl0"> Catégories</h5>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
                     </div>
                     <ul class="m-t--12">
 

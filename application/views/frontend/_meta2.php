@@ -15,6 +15,9 @@ $objectif_info;
 $blog_info;
 $nom_site_info;
 
+$whatsapp_info ;
+$instagram_info ;
+
 if ($contact_info_site->num_rows() > 0) {
 	foreach ($contact_info_site->result_array() as $key) {
 		$nom_site_info = $key['nom_site'];
@@ -32,6 +35,9 @@ if ($contact_info_site->num_rows() > 0) {
 		$mission_info = $key['mission'];
 		$objectif_info = $key['objectif'];
 		$blog_info = $key['blog'];
+
+    $whatsapp_info = $key['whatsapp'];;
+    $instagram_info= $key['instagram']; ;
 
 	}
 
@@ -64,11 +70,13 @@ if ($contact_info_site->num_rows() > 0) {
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/css/util.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/css/main.css">
+<link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/css/main2.css">
 <!--===============================================================================================-->
 
 <!-- sweetalert -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('js/sweetalert/sweetalert.css')?>">
+
+<link rel="stylesheet" href="https://twitter.github.io/typeahead.js/css/examples.css" /> 
 
 
 <style>

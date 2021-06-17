@@ -92,6 +92,9 @@ class home extends CI_Controller
 			$data['articles_recents_detail'] = $this->crud_model->Select_articles_recents_datail();
 
 			$data['offre_tag']  = $this->crud_model->Select_our_articles_tag($param1);
+			$data['commentaires']  = $this->crud_model->Select_our_commentaire_to_articles_tag($param1);
+
+
 
 			$data['pub_publicite']  = $this->crud_model->Select_galery_publicite();
 			$data['pub_publicite3']  = $this->crud_model->Select_galery_publicite_lm3();

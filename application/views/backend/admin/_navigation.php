@@ -58,6 +58,8 @@
 
                         <a class="collapse-item" href="<?php echo(base_url()) ?>admin/publicity_personnele">Publicité entreprise</a>
 
+                        <a class="collapse-item" href="<?php echo(base_url()) ?>admin/commentaire">Commentaire dea articles</a>
+
                        
                         
 

@@ -184,6 +184,20 @@
 		                              
 		                            </div>
 
+                                <!-- whatsapp -->
+                                 <div class="form-group col-md-6 ">
+                                    <label><i class="fab fa-whatsapp"></i> Page whatsapp</label>
+                                    <input type="text" name="whatsapp" id="whatsapp" class="form-control" placeholder="htpps://whatsapp.com/" />
+                                  
+                                </div>
+
+                                <!-- whatsapp -->
+                                 <div class="form-group col-md-6 ">
+                                    <label><i class="fab fa-instagram"></i> Page instagram</label>
+                                    <input type="text" name="instagram" id="instagram" class="form-control" placeholder="htpps://instagram.com/" />
+                                  
+                                </div>
+
 		                            <div class="form-group col-md-12">
 		                                <label><i class="fa fa-linkedin"></i> Page linkedin</label>
 		                                <input type="text" name="linkedin" id="linkedin" class="form-control" placeholder="htpps://linkedin.com/" />
@@ -413,6 +427,11 @@
                          $('#nom_site').val(data.nom_site);
                          $('#tel1').val(data.tel1);
                          $('#tel2').val(data.tel2);
+
+                         $('#whatsapp').val(data.whatsapp);
+                         $('#linkedin').val(data.linkedin);
+
+
                          $('#adresse').val(data.adresse);
                          $('#facebook').val(data.facebook);
                          $('#twitter').val(data.twitter);

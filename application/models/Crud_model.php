@@ -820,6 +820,23 @@ class crud_model extends CI_Model{
       return $this->db->get();
    }
 
+   function fetch_data_search_view_commentaire($query)
+   {
+      $this->db->select("*");
+      $this->db->from("profile_commentaire");
+      $this->db->limit(10);
+      if($query != '')
+      {
+       $this->db->like('idart', $query);
+       $this->db->or_like('nom', $query);
+       $this->db->or_like('description', $query);
+       $this->db->or_like('type', $query);
+       $this->db->or_like('nomcat', $query);
+      }
+      $this->db->order_by('idcomment', 'DESC');
+      return $this->db->get();
+   }
+
 
     function make_query_product()  
     {  
@@ -2495,6 +2512,13 @@ class crud_model extends CI_Model{
       return $this->db->get('category');
   }
 
+  function Select_artcle_orders()
+  {
+      $this->db->order_by('created_at','DESC');
+      $this->db->limit(10);
+      return $this->db->get('article');
+  }
+
 
   // script pour nos article 
   function make_query_article()  
@@ -2942,7 +2966,7 @@ class crud_model extends CI_Model{
 
     function Select_padding_articles_tri()
     {
-        return $this->db->query('SELECT * FROM profile_publicite  ORDER BY RAND() LIMIT 6 ');
+        return $this->db->query('SELECT * FROM profile_publicite  ORDER BY RAND() LIMIT 6');
     }
 
     function Select_category_menu()
@@ -2979,7 +3003,7 @@ class crud_model extends CI_Model{
 
     function Select_article_by_cat()
     {
-        return $this->db->query('SELECT * FROM profile_article  GROUP BY idcat LIMIT 7 ');
+        return $this->db->query('SELECT * FROM profile_article  GROUP BY idcat LIMIT 10 ');
     }
 
     function Select_article_publicite()
@@ -3056,6 +3080,14 @@ class crud_model extends CI_Model{
   {   
       $this->db->limit(1);
       return $this->db->get_where("profile_article", array(
+        'idart' =>  $idart
+      ));
+  }
+
+   function Select_our_commentaire_to_articles_tag($idart)
+  {   
+      $this->db->limit(1);
+      return $this->db->get_where("commentaire", array(
         'idart' =>  $idart
       ));
   }
@@ -3164,6 +3196,230 @@ class crud_model extends CI_Model{
         return $this->db->get_where("profile_article", array(
           'idcat' =>  $idcat
         ));
+    }
+
+    // operation commentaire
+
+    function insert_commentaire($data)  
+    {  
+         $this->db->insert('commentaire', $data);  
+    }
+
+    
+    function update_commentaire($idcomment, $data)  
+    {  
+         $this->db->where("idcomment", $idcomment);  
+         $this->db->update("commentaire", $data);  
+    }
+
+
+    function delete_commentaire($idcomment)  
+    {  
+         $this->db->where("idcomment", $idcomment);  
+         $this->db->delete("commentaire");  
+    }
+
+    function fetch_single_commentaire($idcomment)  
+    {  
+         $this->db->where("idcomment", $idcomment);  
+         $query=$this->db->get('profile_commentaire');  
+         return $query->result();  
+    } 
+
+
+    function fetch_details_view_commentaire()
+    {
+      $output = '';
+       $etat = '';
+      $this->db->select("*");
+      $this->db->from("profile_commentaire");
+      $this->db->order_by("idcomment", "DESC");
+      $this->db->limit(10);
+      $query = $this->db->get();
+      $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($query->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($query->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nomcat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idcomment="'.$row->idcomment.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idcomment="'.$row->idcomment.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+      return $output;
+    }
+
+    // filtrage avec limit 
+    function fetch_details_view_commentaire_limit($limit)
+    {
+      $output = '';
+       $etat = '';
+      $this->db->select("*");
+      $this->db->from("profile_commentaire");
+      $this->db->order_by("idcomment", "DESC");
+      $this->db->limit($limit);
+      $query = $this->db->get();
+      $output .= '
+      <table class="table-striped  nk-tb-list nk-tb-ulist dataTable no-footer" data-auto-responsive="false" id="user_data" role="grid" aria-describedby="DataTables_Table_1_info">
+          <thead class="tb-member-head thead-light">  
+              <tr> 
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th>  
+              </tr>  
+         </thead> 
+
+         <tbody>
+      ';
+      if ($query->num_rows() < 0) {
+        
+      }
+      else{
+
+        foreach($query->result() as $row)
+        {
+
+            if ($row->type=='texte') {
+              $etat = '
+                <div class="user-avatar bg-dim-primary d-none d-sm-flex text-center">
+                    <span><i class="fa fa-file text-primary" ></i></span>
+                </div>
+               ';
+            }
+            elseif ($row->type=='video'){
+              $etat = '
+                  <div class="user-avatar bg-dim-danger d-none d-sm-flex">
+                      <span><i class="fa fa-video-camera text-primary"></i></span>
+                  </div>
+              ';
+            }
+            else{
+
+              $etat = '';
+            }
+
+
+         $output .= '
+         <tr>
+          
+          <td><img src="'.base_url().'upload/article/'.$row->image.'" class="img img-responsive img-thumbnail" width="50" height="35" style="border-radius:50%;" /></td>
+
+          <td>'.nl2br(substr($row->nom, 0,20)).'...'.'</td>
+          <td>'.nl2br(substr($row->description, 0,20)).' ....'.'</td>
+          <td>'.nl2br(substr($row->nomcat, 0,20)).' ...'.'</td>
+          <td>'.$etat.'</td>
+          <td>'.nl2br(substr(date(DATE_RFC822, strtotime($row->created_at)), 0, 23)).'</td>
+          
+          <td><button type="button" name="update" idcomment="'.$row->idcomment.'" class="btn btn-primary btn-circle btn-sm update"><i class="fa fa-edit"></i></button></td>
+          <td><button type="button" name="delete" idcomment="'.$row->idcomment.'" class="btn btn-danger btn-circle btn-sm delete"><i class="fa fa-trash"></i></button></td>
+          
+
+         </tr>
+         ';
+        }
+      }
+      $output .= '
+          </tbody>
+
+         <tfoot>  
+              <tr>  
+                  <th width="10%">Avatar</th> 
+                  <th width="20%">Nom de la vidéo</th>  
+                  <th width="20%">Description </th> 
+                  <th width="10%">Catégorie </th> 
+                  <th width="10%">Type </th>  
+                  <th width="20%">Mise à jour</th>
+                   
+                  
+                  <th width="5%">Modifier</th> 
+                  <th width="5%">Supprimer</th> 
+              </tr>  
+         </tfoot>   
+          
+      </table>';
+      return $output;
     }
 
     

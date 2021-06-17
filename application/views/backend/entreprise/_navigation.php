@@ -39,6 +39,8 @@
 
                 <h6 class="collapse-header">Nos opérations:</h6>
                 <a class="collapse-item" href="<?php echo(base_url()) ?>entreprise/publicity_personnele">Publicité entreprise</a>
+
+                <a class="collapse-item" href="<?php echo(base_url()) ?>entreprise/commentaire">Commentaire dea articles</a>
                 
             </div>
         </div>

@@ -5,11 +5,13 @@
             <div class="content-topbar container h-100">
                 <div class="left-topbar">
                     <span class="left-topbar-item flex-wr-s-c">
+
+
                         <span>
-                           <?php echo($adresse_info) ?>
+                           <?php //echo($adresse_info) ?>
                         </span>
-                        <img class="m-b-1 m-rl-8" src="<?php echo(base_url()) ?>js/frond/images/icons/xicon-night.png.pagespeed.ic.SWJpF1KGA7.png"
-                            alt="IMG">
+                        <!-- <img class="m-b-1 m-rl-8" src="<?php echo(base_url()) ?>js/frond/images/icons/xicon-night.png.pagespeed.ic.SWJpF1KGA7.png"
+                            alt="IMG"> -->
                        
                     </span>
                     <a href="<?php echo(base_url()) ?>home/about" class="left-topbar-item">
@@ -21,9 +23,9 @@
                     <!-- <a href="<?php echo(base_url()) ?>login/register" class="left-topbar-item">
                         S'inscrir
                     </a> -->
-                    <a href="<?php echo(base_url()) ?>login" class="left-topbar-item">
+                   <!--  <a href="<?php echo(base_url()) ?>login" class="left-topbar-item">
                        Se connecter
-                    </a>
+                    </a> -->
                 </div>
                 <div class="right-topbar">
                    <a target="_blank" href="<?php echo($facebook_info) ?>">
@@ -35,11 +37,11 @@
                     <a target="_blank" href="<?php echo($linkedin_info) ?>">
                         <span class="fab fa-linkedin"></span>
                     </a>
-                    <a target="_blank" href="javascript:void(0);">
-                        <span class="fab fa-vimeo-v"></span>
+                    <a target="_blank" href="<?php echo($instagram_info) ?>">
+                        <span class="fab fa-instagram"></span>
                     </a>
-                    <a target="_blank" href="javascript:void(0);">
-                        <span class="fab fa-youtube"></span>
+                     <a target="_blank" href="<?php echo($whatsapp_info) ?>">
+                        <span class="fab fa-whatsapp"></span>
                     </a>
                 </div>
             </div>
@@ -48,8 +50,8 @@
         <div class="wrap-header-mobile">
             <!-- Logo moblie -->
             <div class="logo-mobile">
-                <a href="javascript:void(0);">
-                   <img src="<?= $icone_info ?>" alt="IMG-LOGO" style="height: 80px;">
+                <a href="<?php  echo(base_url()) ?>">
+                   <img src="<?= $icone_info ?>" alt="IMG-LOGO" style="height: 100px; max-height: 150%;">
                 </a>
             </div>
             <!-- Button show menu -->
@@ -65,10 +67,10 @@
                 <li class="left-topbar">
                     <span class="left-topbar-item flex-wr-s-c">
                         <span>
-                            <?php echo($adresse_info) ?>
+                            <?php// echo($adresse_info) ?>
                         </span>
-                        <img class="m-b-1 m-rl-8" src="<?= $icone_info ?>"
-                            alt="IMG" style="height: 15px;">
+                        <!-- <img class="m-b-1 m-rl-8" src="<?= $icone_info ?>"
+                            alt="IMG" style="height: 15px;"> -->
                        
                     </span>
                 </li>
@@ -82,9 +84,9 @@
                    <!--  <a href="<?php echo(base_url()) ?>login/register" class="left-topbar-item">
                         S'inscrir
                     </a> -->
-                    <a href="<?php echo(base_url()) ?>login" class="left-topbar-item">
+                    <!-- <a href="<?php echo(base_url()) ?>login" class="left-topbar-item">
                        Se connecter
-                    </a>
+                    </a> -->
                 </li>
                 <li class="right-topbar">
                     <a target="_blank" href="<?php echo($facebook_info) ?>">
@@ -96,12 +98,12 @@
                     <a target="_blank" href="<?php echo($linkedin_info) ?>">
                         <span class="fab fa-linkedin"></span>
                     </a>
-                    <a target="_blank" href="javascript:void(0);">
-                        <span class="fab fa-vimeo-v"></span>
+                    <a target="_blank" href="<?php echo($instagram_info) ?>">
+                        <span class="fab fa-instagram"></span>
                     </a>
-                    <a target="_blank" href="javascript:void(0);">
+                    <!-- <a target="_blank" href="javascript:void(0);">
                         <span class="fab fa-youtube"></span>
-                    </a>
+                    </a> -->
                 </li>
             </ul>
             <ul class="main-menu-m">
@@ -133,6 +135,13 @@
                 <li>
                     <a href="#">Autres</a>
                     <ul class="sub-menu-m">
+                        <li><a href="<?php echo(base_url()) ?>home/about">Apropos</a>
+                        </li>
+                        <li><a href="<?php echo(base_url()) ?>home/contact">Contact</a>
+                        </li>
+
+                        <li><a href="<?php echo(base_url()) ?>home/contrat">Terme et contrat</a>
+                        </li>
                         <?php
 
                             if($this->session->userdata('admin_login'))
@@ -154,7 +163,7 @@
                                 }
                             }
 
-                            if($this->session->userdata('entreprise_login'))
+                            elseif($this->session->userdata('entreprise_login'))
                             {   $id_connected_ok = $this->session->userdata('entreprise_login');
                                 $this->db->where('id',$id_connected_ok);
                                 $ok_users_ = $this->db->get('users')->result_array();
@@ -173,7 +182,7 @@
                                 }
                             }
 
-                            if($this->session->userdata('id'))
+                            elseif($this->session->userdata('id'))
                             {   $id_connected_ok = $this->session->userdata('id');
                                 $this->db->where('id',$id_connected_ok);
                                 $ok_users_ = $this->db->get('users')->result_array();
@@ -192,7 +201,7 @@
                                 }
                             }
 
-                            if($this->session->userdata('instuctor_login'))
+                            elseif($this->session->userdata('instuctor_login'))
                             {   $id_connected_ok = $this->session->userdata('instuctor_login');
                                 $this->db->where('id',$id_connected_ok);
                                 $ok_users_ = $this->db->get('users')->result_array();
@@ -211,6 +220,16 @@
                                 }
                             }
 
+                            else{
+                                ?>
+
+                                <li>
+                                    <a href="<?php echo(base_url()) ?>login">Se connecter</a>
+                                </li>
+
+                                <?php
+                            }
+
 
                         
 
@@ -218,13 +237,7 @@
                         
                         
                        
-                        <li><a href="<?php echo(base_url()) ?>home/about">Apropos</a>
-                        </li>
-                        <li><a href="<?php echo(base_url()) ?>home/contact">Contact</a>
-                        </li>
-
-                        <li><a href="<?php echo(base_url()) ?>home/contrat">Terme et contrat</a>
-                        </li>
+                        
                     </ul>
                     <span class="arrow-main-menu-m">
                         <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -298,7 +311,13 @@
                             <a href="#">Autres</a>
                             <ul class="sub-menu">
                                 
+                                <li><a href="<?php echo(base_url()) ?>home/about">Apropos</a>
+                                </li>
+                                <li><a href="<?php echo(base_url()) ?>home/contact">Contact</a>
+                                </li>
 
+                                <li><a href="<?php echo(base_url()) ?>home/contrat">Terme et contrat</a>
+                                </li>
                                 <?php 
 									if ($categories2->num_rows() <=0) {
 										# code...
@@ -351,7 +370,7 @@
      							        }
 								    }
 
-								    if($this->session->userdata('entreprise_login'))
+								    elseif($this->session->userdata('entreprise_login'))
 								    {	$id_connected_ok = $this->session->userdata('entreprise_login');
 								    	$this->db->where('id',$id_connected_ok);
      							        $ok_users_ = $this->db->get('users')->result_array();
@@ -370,7 +389,7 @@
      							        }
 								    }
 
-								    if($this->session->userdata('id'))
+								    elseif($this->session->userdata('id'))
 								    {	$id_connected_ok = $this->session->userdata('id');
 								    	$this->db->where('id',$id_connected_ok);
      							        $ok_users_ = $this->db->get('users')->result_array();
@@ -389,7 +408,7 @@
      							        }
 								    }
 
-								    if($this->session->userdata('instuctor_login'))
+								    elseif($this->session->userdata('instuctor_login'))
 								    {	$id_connected_ok = $this->session->userdata('instuctor_login');
 								    	$this->db->where('id',$id_connected_ok);
      							        $ok_users_ = $this->db->get('users')->result_array();
@@ -407,6 +426,16 @@
 									      	<?php
      							        }
 								    }
+                                    else{
+                                        ?>
+
+                                        <li>
+                                            <a href="<?php echo(base_url()) ?>login">Se connecter</a>
+                                        </li>
+                                        
+                                        <?php
+                                    }
+
 
 
 								
@@ -415,13 +444,7 @@
 								
                                 
                                
-                                <li><a href="<?php echo(base_url()) ?>home/about">Apropos</a>
-                                </li>
-                                <li><a href="<?php echo(base_url()) ?>home/contact">Contact</a>
-                                </li>
-
-                                <li><a href="<?php echo(base_url()) ?>home/contrat">Terme et contrat</a>
-                                </li>
+                                
                                
 
                             </ul>

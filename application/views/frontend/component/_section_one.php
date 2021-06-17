@@ -60,7 +60,7 @@
 	                                </a>
 	                                <div class="p-t-20">
 	                                    <h5 class="p-b-5">
-	                                        <a href="blog-detail-01.html"
+	                                        <a href="<?php echo(base_url())?>home/article/<?php echo($key['idart'])?>"
 	                                            class="f1-m-3 cl2 hov-cl10 trans-03">
 	                                           <?php echo (substr($key['nom'], 0,95)); ?> ...
 	                                        </a>
@@ -182,12 +182,12 @@
 	<div class="col-sm-6 p-r-25 p-r-15-sr991">
 		<!-- Item latest -->
 		<div class="m-b-45">
-			<a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+			<a href="javascript:void(0);" class="wrap-pic-w hov1 trans-03">
 				<img src="images/xlatest-01.jpg.pagespeed.ic.uU9vdj6kbF.jpg" alt="IMG">
 			</a>
 			<div class="p-t-16">
 				<h5 class="p-b-5">
-					<a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+					<a href="javascript:void(0);" class="f1-m-3 cl2 hov-cl10 trans-03">
 						You wish lorem ipsum dolor sit amet consectetur
 					</a>
 				</h5>

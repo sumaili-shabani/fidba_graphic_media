@@ -1,14 +1,14 @@
 <div class="p-l-10 p-rl-0-sr991">
     <!-- Subscribe -->
-    <div class="bg10 p-rl-35 p-t-28 p-b-35 m-b-50">
-        <h5 class="f1-m-5 cl0 p-b-10">
-            Inscrivez-vous
-        </h5>
-        <p class="f1-s-1 cl0 p-b-25">
-            Devenir à présent membre  afin de recevoir plus de nouvelles!
+    <div class="bg10 p-rl-35 p-t-28 p-b-35 m-b-50" style="background-color: rgb(240, 240, 240);">
+        <!-- <h5 class="f1-m-5 cl0 p-b-10">
+            Contact pour information
+        </h5> -->
+        <p class="f1-s-1 cl0 p-b-25" style="color: black;">
+            Contectez-nous pour renseignement
         </p>
         <form class="size-a-9 pos-relative" action="<?= base_url() ?>home/contact">
-            <input class="s-full f1-m-6 cl6 plh9 p-l-20 p-r-55" type="text" name="email"
+            <input class="s-full f1-m-6 cl6 plh9 p-l-20 p-r-55" type="email" name="email"
                 placeholder="Adresse email">
             <button class="size-a-10 flex-c-c ab-t-r fs-16 cl9 hov-cl10 trans-03">
                 <i class="fa fa-arrow-right"></i>
@@ -19,7 +19,7 @@
     <div class="p-b-23">
         <div class="how2 how2-cl4 flex-s-c">
             <h3 class="f1-m-2 cl3 tab01-title">
-                Publications plus suivues
+                Publications les plus suivues
             </h3>
         </div>
         <ul class="p-t-35">
@@ -49,11 +49,11 @@
 						?>
 
 						<li class="flex-wr-sb-s p-b-22">
-			                <div class="size-a-8 flex-c-c borad-3 size-a-8 bg9 f1-m-4 cl0 m-b-6">
-			                    <i class="fa fa-eye"></i> <?php echo($nombre_vue) ?>
+			                <div class="col-md-4">
+			                    
 			                </div>
 			                <a href="<?php echo(base_url())?>home/article/<?php echo($key['idart'])?>" class="size-w-3 f1-s-7 cl3 hov-cl10 trans-03">
-			                    <?php echo (substr($key['nom'], 0,35)); ?> ... 
+			                    <font class="mr-2" style="font-style: italic;"><i class="fa fa-eye"></i> <?php echo($nombre_vue) ?></font> <?php echo (substr($key['nom'], 0,30)); ?> ... 
 			                </a>
 			            </li>
 						
@@ -107,7 +107,7 @@
     <div>
         <div class="how2 how2-cl4 flex-s-c m-b-30">
             <h3 class="f1-m-2 cl3 tab01-title">
-                Nos catégories ou rubribres
+                 Catégories 
             </h3>
         </div>
         <div class="flex-wr-s-s m-rl--5">
@@ -155,7 +155,7 @@
     <div class="p-b-30" style="margin-top: 10px;">
         <div class="how2 how2-cl4 flex-s-c">
             <h3 class="f1-m-2 cl3 tab01-title">
-                Nos favorites informations
+                Articles sponsorisés
             </h3>
         </div>
         <ul class="p-t-35">

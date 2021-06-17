@@ -141,7 +141,9 @@
 		<div class="col-md-12" style="margin-top: 10px;">
 			<!-- script pour la carte géographique -->
 			  <div class="embed-responsive embed-responsive-16by9 col-lg-12" style="width: 100%; height: 400px;">
-			      <iframe class="embed-responsive-item" src="https://www.google.com/maps/d/embed?mid=1Q5K5fz4UoKKXxKVu6KdZhVNrYZ4UScBy" allowfullscreen></iframe>
+			      <!-- <iframe class="embed-responsive-item" src="https://www.google.com/maps/d/embed?mid=1Q5K5fz4UoKKXxKVu6KdZhVNrYZ4UScBy" allowfullscreen></iframe> -->
+
+			      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d214635.39427973505!2d29.232303899597827!3d-1.622963354511647!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8fe33b943ddcff93!2sFIDBA%20GRAPHICS!5e0!3m2!1sfr!2scd!4v1623773628459!5m2!1sfr!2scd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 			  </div>
 			<!-- fin de ces scripts -->
 		                

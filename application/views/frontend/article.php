@@ -148,8 +148,8 @@
         <script type="text/javascript">
 		$(document).ready(function() {
 			var idart = $('.idart').val();
-			var url = "<?php echo(base_url()) ?>api/json/ip.json";
-			// var url = "http://ip-api.com/json/";
+			// var url = "<?php echo(base_url()) ?>api/json/ip.json";
+			var url = "http://ip-api.com/json/";
 			fetch(url)
 			.then(response => response.json())
 			.then((data) => {
