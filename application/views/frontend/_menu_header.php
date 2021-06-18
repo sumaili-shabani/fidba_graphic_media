@@ -86,14 +86,28 @@
                        
                     </span>
                 </li>
-                <li class="col-md-12 col-xl-12 col-sm-12 col-lg-12">
+                <li class="left-topbar col-md-12 col-xl-12 col-sm-12 col-lg-12">
                     <!-- Button show menu -->
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="row">
-                                
+
                                 <div class="col-md-12" id="prefetch2">
-                                    <input type="search" name="search" class="form-control-lg typeahead search_text" id="inlineFormInputGroupUsername2" placeholder="Rechecher un article...">
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control-lg typeahead search_text border-0 bg-light mr-1" placeholder="Rechecher un article..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary btn-lg border-0" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                   
                                 </div>
                             </div>
                         </div>
@@ -340,7 +354,7 @@
                             <ul class="sub-menu">
 
                                
-                                <li><a href="javascript:void(0);" class="show_zone_recherche">Effectuer une recherche</a>
+                              <!--   <li><a href="javascript:void(0);" class="show_zone_recherche">Effectuer une recherche</a> -->
                                 <li><a href="<?php echo(base_url()) ?>home/about">Apropos</a>
                                 </li>
                                 <li><a href="<?php echo(base_url()) ?>home/contact">Contact</a>
@@ -479,6 +493,31 @@
 
                             </ul>
                         </li>
+
+                        <li class="main-menu">
+                            <a href="javascript:void(0);" class="show_zone_recherche">
+                                <i class="fa fa-search" style="font-size: 20px; color: black;"></i>
+                            </a>
+
+
+                            <div id="prefetch2" class="zone_recherche dropdown-menu dropdown-menu-left p-3 shadow animated--grow-in show" aria-labelledby="searchDropdown" style="width: 325px; margin-top: 15px; border-color: black; margin-bottom: 3px; float:left;">
+                                <form class="form-inline mr-auto w-200 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control-lg typeahead search_text bg-light border-0 small mr-1" placeholder="Recherche..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary btn-lg" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </li>
+
+                        
+
                     </ul>
 
 
@@ -491,7 +530,7 @@
 </header>
 
 <!-- recherche pour information -->
-<div class="menu-desktop zone_recherche" style="margin-top: 10px; margin-bottom: 50px;">
+<!-- <div class="menu-desktop zone_recherche" style="margin-top: 10px; margin-bottom: 50px;">
 
     <div class="col-md-12 card mb-2">
         <div class="col-md-12 card-body">
@@ -499,13 +538,15 @@
                 
                 <div class="col-md-12 form-group" id="prefetch2">
                     <input type="search" name="search" class="form-control typeahead search_text" id="inlineFormInputGroupUsername2" placeholder="Rechecher un article..." style="width: 1000px; margin-top: 15px; border-color: black; margin-bottom: 3px;" >
+
+
                 </div>
                 
             </div>
         </div>
     </div>
     
-</div>
+</div> -->
 <!-- fin recherche -->
 
 <!-- bande de recherche -->

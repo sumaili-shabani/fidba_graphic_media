@@ -23,6 +23,8 @@
     });
 </script>
 
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -31,7 +33,10 @@
 			event.preventDefault();
 			/* Act on the event */
 			$('.zone_recherche').show();
-			$(this).addClass('hide_zone_recherche').html("Cachez la recherche");
+			$(this).removeClass('show_zone_recherche');
+			$(this).addClass('hide_zone_recherche');
+			$(this).html('<i class="fa fa-close" style="font-size: 20px; color: black;"></i>');
+			// $(this).html("Cachez la recherche");
 
 		});
 
@@ -39,7 +44,10 @@
 			event.preventDefault();
 			/* Act on the event */
 			$('.zone_recherche').hide();
-			$(this).addClass('hide_zone_recherche').html("Effectuer une recherche");
+			$(this).removeClass('hide_zone_recherche');
+			$(this).addClass('show_zone_recherche');
+			// $(this).html("Effectuer une recherche");
+			$(this).html('<i class="fa fa-search" style="font-size: 20px; color: black;"></i>');
 		});
 	});
 </script>

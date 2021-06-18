@@ -59,6 +59,11 @@ if ($contact_info_site->num_rows() > 0) {
 <link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/fonts/fontawesome-5.0.8/css/fontawesome-all.min.css">
+
+
+<!-- font awason icon -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('js/assets/font-awesome/css/font-awesome.css')?>">
+
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
@@ -70,7 +75,7 @@ if ($contact_info_site->num_rows() > 0) {
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/css/util.min.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/css/main2.css">
+<link rel="stylesheet" type="text/css" href="<?php echo(base_url()) ?>js/frond/css/main.css">
 <!--===============================================================================================-->
 
 <!-- sweetalert -->
