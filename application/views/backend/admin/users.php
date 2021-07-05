@@ -27,18 +27,15 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="col-md-12 card">
-                       <div class="row card-body">
-                           <!-- mes scripts commencent -->
-                          
-                          	<div id="load_data"></div>
-	                          <div id="load_data_message"></div>
-	                    	  <?php include("__users_.php") ?>
-                           <!-- fin de mes scripts commencent -->
-                       </div>
-                   </div>
-                     <!-- Fin Page Heading -->
+                  <!-- Page Heading -->
+                  <div class="col-md-12">
+                        <div id="load_data"></div>
+                        <div id="load_data_message"></div>
+                     <?php include("__users_.php") ?>
+                  </div>
+                   <!-- Fin Page Heading -->
+
+                   
 
                 </div>
                 <!-- /.container-fluid -->

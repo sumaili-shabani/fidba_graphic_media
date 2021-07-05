@@ -202,24 +202,7 @@
                                 }
                             }
 
-                            elseif($this->session->userdata('entreprise_login'))
-                            {   $id_connected_ok = $this->session->userdata('entreprise_login');
-                                $this->db->where('id',$id_connected_ok);
-                                $ok_users_ = $this->db->get('users')->result_array();
-                                foreach ($ok_users_ as $key) {
-                                    # code...
-                                    ?>
-                                    <li>
-                                         <div class="col-md-12 text-center" style="margin-top: 10px;">
-                                            <img src="<?php echo(base_url()) ?>upload/photo/<?php echo($key['image']) ?>" style="width: 50px;height: 40px; border-radius: 50%;" />
-                                            <a href="<?php echo(base_url()) ?>entreprise/profile">
-                                            <?php echo($key['first_name']) ?> &nbsp;<?php echo($key['last_name']) ?>
-                                         </div>
-                                        
-                                    </a></li>
-                                    <?php
-                                }
-                            }
+                           
 
                             elseif($this->session->userdata('id'))
                             {   $id_connected_ok = $this->session->userdata('id');
@@ -250,7 +233,7 @@
                                     <li>
                                          <div class="col-md-12 text-center" style="margin-top: 10px;">
                                             <img src="<?php echo(base_url()) ?>upload/photo/<?php echo($key['image']) ?>" style="width: 50px;height: 40px; border-radius: 50%;" />
-                                            <a href="<?php echo(base_url()) ?>journaliste/profile">
+                                            <a href="<?php echo(base_url()) ?>entreprise/profile">
                                             <?php echo($key['first_name']) ?> &nbsp;<?php echo($key['last_name']) ?>
                                          </div>
                                         
@@ -414,25 +397,7 @@
      							        }
 								    }
 
-								    elseif($this->session->userdata('entreprise_login'))
-								    {	$id_connected_ok = $this->session->userdata('entreprise_login');
-								    	$this->db->where('id',$id_connected_ok);
-     							        $ok_users_ = $this->db->get('users')->result_array();
-     							        foreach ($ok_users_ as $key) {
-     							        	# code...
-									      	?>
-									      	<li>
-									      		 <div class="col-md-12 text-center" style="margin-top: 10px;">
-									      		 	<img src="<?php echo(base_url()) ?>upload/photo/<?php echo($key['image']) ?>" style="width: 50px;height: 40px; border-radius: 50%;" />
-									      		 	<a href="<?php echo(base_url()) ?>entreprise/profile">
-									      			<?php echo($key['first_name']) ?> &nbsp;<?php echo($key['last_name']) ?>
-									      		 </div>
-									      		
-									      	</a></li>
-									      	<?php
-     							        }
-								    }
-
+								    
 								    elseif($this->session->userdata('id'))
 								    {	$id_connected_ok = $this->session->userdata('id');
 								    	$this->db->where('id',$id_connected_ok);
@@ -462,7 +427,7 @@
 									      	<li>
 									      		 <div class="col-md-12 text-center" style="margin-top: 10px;">
 									      		 	<img src="<?php echo(base_url()) ?>upload/photo/<?php echo($key['image']) ?>" style="width: 50px;height: 40px; border-radius: 50%;" />
-									      		 	<a href="<?php echo(base_url()) ?>journaliste/profile">
+									      		 	<a href="<?php echo(base_url()) ?>entreprise/profile">
 									      			<?php echo($key['first_name']) ?> &nbsp;<?php echo($key['last_name']) ?>
 									      		 </div>
 									      		

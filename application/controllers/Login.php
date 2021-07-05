@@ -2,13 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');  
 class login extends CI_Controller
 {
-
+	protected $email_sites;
 	public function __construct()
 	{
 	  parent::__construct();
 	  $this->load->library('form_validation');
 	  $this->load->library('encryption');
-	  $this->load->model('crud_model'); 
+	  $this->load->model('crud_model');
+	  $this->email_sites = $this->crud_model->get_email_du_site(); 
 	}
 
 
@@ -430,7 +431,7 @@ class login extends CI_Controller
                 $code=str_shuffle(substr("1f-èh_çà234567890+6@-?[K89ZTY\J0-T9*h#+/@THSBJ98461700221VPEHI?S&8!}\|", 0,10));
                 $verification_key = md5(rand());
                 $mail    = $this->input->post('user_email');
-                $website = "info@congoback.com";
+                $website = $this->email_sites;
 
                 $to =$this->input->post('user_email');
                 $subject = "votre mot de passe de recupération au compte system Ets yetu";
